@@ -1,0 +1,209 @@
+<?php
+echo "<div class='card'><div class='card-body'>";
+echo "<h2 class='text-center'>Manage Item</h2>";
+echo "</div></div><hr>";
+$i = 0;
+
+if ($items->count() >= 0) {
+    ?>
+    <table class="table table-bordered table-hover text-center align-bottom">
+        <thead class="thead bg-secondary text-white ">
+        <tr>
+            <th class="align-middle">#</th>
+            <th class="align-middle">Foto</th>
+            <th class="align-middle">Nama</th>
+            <th class="align-middle">Deskripsi</th>
+            <th class="align-middle">Kategori</th>
+            <th class="align-middle">Harga</th>
+            <th class="align-middle">Lokasi</th>
+            <th class="align-middle">Stock</th>
+            <th><a href="#modal-tambah" class="btn btn-primary" data-toggle="modal" data-placement="top" title="Tambah item baru"><i class="fas fa-plus" aria-hidden="true"></i></a></th>
+        </tr>
+        </thead>
+        <tbody class="bg-white">
+        <?php foreach ($items as $item) { $i++ ?>
+            <tr>
+                <td class="align-middle"><?php echo $i ?></td>
+                <td class="align-middle"><img class="img-responsive center-block" 
+                    height="150" width="100" 
+                    src="data:image/jpeg;base64,<?php echo $item->getItemFoto() ?>">
+                </td>
+                <td class="align-middle"><?php echo $item->item_nama; ?></td>
+                <td class="align-middle text-left"><?php echo $item->item_deskripsi; ?></td>
+                <td class="align-middle"><?php echo $item->item_kategori; ?></td>
+                <td class="align-middle"><?php echo $item->item_harga; ?></td>
+                <td class="align-middle"><?php echo $item->item_lokasi; ?></td>
+                <td class="align-middle"><?php echo $item->item_stock; ?></td>
+                <td class="align-middle" >
+                    <a style="width:45px;" href="#modal-edit" class="btn btn-info" data-toggle="modal" data-placement="top" title="Edit Item"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                    <a style="width:45px; margin: 5px auto" href="#modal-delete" class="btn btn-danger" data-toggle="modal" data-placement="top" title="Hapus Item"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+}
+?>
+<!-- Modal -->
+<div class="modal fade" id="modal-tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <?php
+        echo $this->tag->form(
+            [
+                "item/tambahitem",
+                "autocomplete" => "off",
+                "class" => "form-horizontal",
+                "enctype" => "multipart/form-data"
+            ]
+        );
+       ?>  
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-6 form-group">
+                  <label for="item_nama">Nama Item</label>
+                  <?php echo $this->tag->textField(["item_nama", "class" => "form-control", "required" => "1"]); ?>
+              </div>
+
+              <div class="col-6 form-group">
+                  <label for="item_kategori">Kategori</label>
+                  <?php echo $this->tag->selectStatic(['item_kategori',["Buah" => "Buah", "Sayur" => "Sayur", "Rempah" => "Rempah"], "class" => "form-control"]); ?>
+              </div>
+              
+              <div class="col-6 form-group">
+                  <label for="item_harga">Harga (Rp)</label>
+                  <?php echo $this->tag->numericField(["item_harga", "class" => "form-control", "step" => "500", "min" => "0"]); ?>
+              </div>
+              
+              <div class="col-6 form-group">
+                  <label for="item_stock">Stock</label>
+                  <?php echo $this->tag->numericField(["item_stock", "class" => "form-control", "step" => "1", "min" => "0"]); ?>
+              </div>
+
+              <div class="col-6 form-group">
+                  <label for="item_lokasi">Lokasi</label>
+                  <?php echo $this->tag->textField(["item_lokasi", "class" => "form-control", "required" => "1"]); ?>
+              </div>
+
+              <div class="col-6 form-group">
+                  <label for="item_foto">Foto Item</label>
+                  <?php echo $this->tag->fileField(["imageFile", "size" => 30, "class" => "form-control", "id" => "item_foto"]) ?>
+              </div>
+
+              <div class="col-12 form-group">
+                  <label for="item_deskripsi">Deskripsi Item</label>
+                  <?php echo $this->tag->textArea(["item_deskripsi", "class" => "form-control", "required" => "1"]); ?>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <?php echo $this->tag->submitButton(["Submit", "class" => "btn btn-primary"]), PHP_EOL; ?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <?php echo $this->tag->form("item/edititem/".$item->item_id); ?> -->
+      <?php
+        echo $this->tag->form(
+          [
+            "item/edititem/".$item->item_id,
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "enctype" => "multipart/form-data"
+          ]
+        );
+       ?> 
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-6 form-group">
+                  <label for="item_nama">Nama Item</label>
+                  <?php echo $this->tag->textField(["item_nama", "class" => "form-control", "required" => "1", "value" => $item->item_nama]); ?>
+              </div>
+
+              <div class="col-6 form-group">
+                  <label for="item_kategori">Kategori</label>
+                  <?php echo $this->tag->selectStatic(['item_kategori',["Buah" => "Buah", "Sayur" => "Sayur", "Rempah" => "Rempah"], "class" => "form-control", "value" => $item->item_kategori]); ?>
+              </div>
+              
+              <div class="col-6 form-group">
+                  <label for="item_harga">Harga</label>
+                  <?php echo $this->tag->numericField(["item_harga", "class" => "form-control", "step" => "500", "min" => "0", "value" => $item->item_harga]); ?>
+              </div>
+              
+              <div class="col-6 form-group">
+                  <label for="item_stock">Stock</label>
+                  <?php echo $this->tag->numericField(["item_stock", "class" => "form-control", "step" => "1", "min" => "0", "value" => $item->item_stock]); ?>
+              </div>
+
+              <div class="col-6 form-group">
+                  <label for="item_lokasi">Lokasi</label>
+                  <?php echo $this->tag->textField(["item_lokasi", "class" => "form-control", "required" => "1", "value" => $item->item_lokasi]); ?>
+              </div>
+
+              <div class="col-6 form-group">
+                  <label for="item_foto">Foto Item</label>
+                  <?php echo $this->tag->fileField(["imageFile", "size" => 30, "class" => "form-control", "id" => "item_foto"]) ?>
+              </div>
+
+              <div class="col-12 form-group">
+                  <label for="item_deskripsi">Deskripsi Item</label>
+                  <?php echo $this->tag->textArea(["item_deskripsi", "class" => "form-control", "required" => "1", "value" => $item->item_deskripsi]); ?>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <?php echo $this->tag->submitButton(["Submit", "class" => "btn btn-primary"]), PHP_EOL; ?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+        
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Hapus Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?php echo "Apakah anda yakin akan menghapus item <strong>", $item->item_nama, "</strong>"; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <?php
+            echo $this->tag->linkTo([
+                "/item/hapusitem/".$item->item_id,
+                'Ya ',
+                "class" => "btn btn-danger",
+                "data-toggle" =>"tooltip",
+                "data-placement" => "top",
+                'title' => "Hapus Item"
+            ]);
+        ?>
+      </div>
+    </div>
+  </div>
+</div>        

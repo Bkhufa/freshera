@@ -65,6 +65,31 @@ ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
+-- ITEM
+
+CREATE TABLE `item` (
+  `item_id` int(11) NOT NULL,
+  `item_nama` varchar(50) NOT NULL,
+  `item_deskripsi` varchar(50) NOT NULL,
+  `item_kategori` varchar(200) NOT NULL,
+  `item_harga` varchar(13) NOT NULL,
+  `item_stock` varchar(100) NOT NULL,
+  `item_lokasi` varchar(100) NOT NULL,
+  `item_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `item_foto` longblob
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`item_id`);
+ALTER TABLE `item`
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+
+INSERT INTO `item` (`item_id`, `item_nama`, `item_deskripsi`, `item_kategori`, `item_harga`, `item_stock`, `item_lokasi` ) VALUES
+(1, 'Wortel', 'Wortel asli Indonesia', 'Sayur', '5000', '20', 'Pasar Keputih');
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

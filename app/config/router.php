@@ -15,4 +15,6 @@ $router->add('/user/signup', ['controller' => 'user', 'action' => 'signup']);
 // $router->add('/user/profile', ['controller' => 'user', 'action' => 'profile']);
 $router->add('/user/logout', ['controller' => 'user', 'action' => 'logout']);
 
+$router->add('/item/manageitem', ['controller' => 'item', 'action' => 'aturitem']);
+
 $router->handle($_SERVER['REQUEST_URI']);
