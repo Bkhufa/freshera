@@ -83,17 +83,17 @@ class UserController extends ControllerBase
 
     public function profileAction() 
     {
-        $this->authorized();
+        $this->loggedin();
     }
 
     public function editProfileAction()
     {
-        $this->authorized();
+        $this->loggedin();
     }
 
     public function editedProfileAction()
     {
-        $this->authorized();
+        $this->loggedin();
         $email = $this->session->get("email");
         $success = false;
         
