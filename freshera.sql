@@ -54,6 +54,12 @@ INSERT INTO `user` (`id`, `name`, `email`, `password`, `phone`, `address`) VALUE
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `user`
+  ADD COLUMN `is_admin` bool DEFAULT NULL;
+
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `phone`, `address`, `is_admin`) VALUES
+(99, 'Admin', 'admin@admin.com', '$2y$10$SU5raFVMeVdNRThZSkFsW.VYATtUoDrlgiFuXXEz1thHDGafEVeFa', '081234567890', 'Jl. Jendral Akhmad Yani', '1');
+
 --
 -- AUTO_INCREMENT for dumped tables
 --

@@ -41,6 +41,12 @@ class User extends Model
     public $address;
     
     /**
+     *
+     * @var string
+     */
+    public $is_admin;
+    
+    /**
      * Initialize method for model.
      */
     public function initialize()

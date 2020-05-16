@@ -50,6 +50,7 @@ class UserController extends ControllerBase
                  $this->session->set('email', $user->email);
                  $this->session->set('phone', $user->phone);
                  $this->session->set('address', $user->address);
+                 $this->session->set('is_admin', $user->is_admin);
                  
                  return $this->dispatcher->forward(array( 
                      'controller' => 'index',

@@ -15,7 +15,7 @@ class ControllerBase extends Controller
     public function isLoggedIn()
     {
         // Check if the variable is defined
-        if ($this->session->has('name') AND $this->session->has('email') AND $this->session->has('id') ){
+        if ($this->session->is_admin == 1 ){
             return true;
         }
         return false;

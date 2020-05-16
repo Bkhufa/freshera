@@ -41,6 +41,20 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav">
+                        <?php
+                            # Check User Login
+                            if ($this->session->get('is_admin') != null)
+                            {
+                                echo "<li class='nav-item'>", $this->tag->linkTo([
+                                    "/item/aturitem",
+                                    'Kelola Item',
+                                    "class" => "nav-link"
+                                ]), "</li>";
+
+                                echo "&nbsp;";
+                            }
+                        ?>
+
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
                         <?php

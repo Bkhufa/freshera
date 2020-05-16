@@ -9,6 +9,7 @@ class ItemController extends ControllerBase
 
     public function aturItemAction()
     {
+        $this->authorized();
         $this->view->items = Item::find();
     }
     
