@@ -32,10 +32,11 @@
                 <label for="address">Address</label>
                 <?php echo $this->tag->textField(["address", "class" => "form-control"]); ?>
             </div>
+            <br>
             
             <div class="form-group text-center">
             <?php 
-                echo $this->tag->submitButton(["Sign Up", "class" => "btn btn-primary"]), PHP_EOL; 
+                echo $this->tag->submitButton(["Sign Up", "class" => "btn btn-primary btn1"]), PHP_EOL; 
                 echo "<br>", "Already have an account? &nbsp";
                 echo $this->tag->linkTo("/user/loginpage", "Login");
             ?>

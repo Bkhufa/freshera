@@ -13,10 +13,11 @@
                 <label for="password">Password</label>
                 <?php echo $this->tag->passwordField(['password', "class" => "form-control"]); ?>
             </div>
+            <br>
 
             <div class="form-group text-center">
                 <?php 
-                    echo $this->tag->submitButton(["Login", "class" => "btn btn-primary"]), PHP_EOL; 
+                    echo $this->tag->submitButton(["Login", "class" => "btn btn-primary btn1"]), PHP_EOL; 
                     echo "<br>", "Don't have an account yet? &nbsp";
                     echo $this->tag->linkTo("/user/signuppage", "Sign Up");
                 ?>

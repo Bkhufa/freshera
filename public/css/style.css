@@ -1,0 +1,61 @@
+:root {
+    --color-1: #408C2B;
+    --color-2: #B9D948;
+    --color-3: #47A638;
+    --color-4: #66F58C;
+}
+
+body {
+    background-color: #333333;
+    /* background-image: url(/img/intersection.png); */
+}
+
+.frame {
+    margin: 0 auto;
+}
+
+.fsmall {
+    width: 40%;
+}
+
+.flarge {
+    width: 60%;
+}
+
+.card {
+    border-radius: 40px;
+}
+
+.btn1 {
+    background-color: white;
+    border: solid 2px;
+    border-color: var(--color-2);
+    border-radius: 10px;
+    color: var(--color-1);
+    font-weight: 600;
+    width: 80%;
+    transition: 500;
+}
+
+.btn1:hover {
+    background-color: var(--color-1);
+    border-color: var(--color-3);
+    color: white;
+}
+
+a {
+    color: var(--color-1);
+}
+
+label {
+    color: var(--color-1);
+}
+
+/* .card-header {
+    background-color: #fcfcfc;
+}
+
+.card-icon {
+    font-size: 90px;
+    margin: 20px auto;
+} */
