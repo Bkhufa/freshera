@@ -13,7 +13,11 @@ return new \Phalcon\Config([
         'host'        => 'localhost',
         'username'    => 'root',
         'password'    => '',
+<<<<<<< HEAD
         'dbname'      => 'freshera',
+=======
+        'dbname'      => 'test',
+>>>>>>> 2ff15f707e76dcf1ba576d28e0fce4344322ba84
         'charset'     => 'utf8',
     ],
     'application' => [
