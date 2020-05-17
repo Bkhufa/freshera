@@ -50,6 +50,7 @@ class UserController extends ControllerBase
                  $this->session->set('email', $user->email);
                  $this->session->set('phone', $user->phone);
                  $this->session->set('address', $user->address);
+                 $this->session->set('is_admin', $user->is_admin);
                  
                  return $this->dispatcher->forward(array( 
                      'controller' => 'index',
@@ -82,17 +83,17 @@ class UserController extends ControllerBase
 
     public function profileAction() 
     {
-        $this->authorized();
+        $this->loggedin();
     }
 
     public function editProfileAction()
     {
-        $this->authorized();
+        $this->loggedin();
     }
 
     public function editedProfileAction()
     {
-        $this->authorized();
+        $this->loggedin();
         $email = $this->session->get("email");
         $success = false;
         
