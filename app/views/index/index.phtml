@@ -1,7 +1,94 @@
-<div class="page-header">
-    <h1>Congratulations!</h1>
-</div>
+<?php
+echo "<div class='card'><div class='card-body'>";
+echo "<h2 class='text-center'>Welcome to Freshera!</h2>";
+echo "</div></div><hr>";
+$i = 0;
 
-<p>You're now flying with Phalcon. Great things are about to happen!</p>
+if ($buah->count() >= 0) {
+    ?><div class="row">
+    <h4 class="item-category col-12">Buah-buahan</h4>
+    <?php foreach ($buah as $buahs) { $i++ ?>
+        <div class="card-container col-4">
+            <div class="card card-item" style="width: 20rem;">
+                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $buahs->getItemFoto() ?>">
+                <div class="card-body row">
+                    <h5 class="col-8"><?php echo $buahs->item_nama; ?></h5>
+                    <p class="col-4">Rp<?php echo number_format(abs($buahs->item_harga), 0, ".", ".") ?></p>
+                </div>
+                <div class="card-footer btn-cart">
+                    <a href="#" class="">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    </div>
+    <hr>
+    <?php
+}
 
-<p>This page is located at <code>views/index/index.phtml</code></p>
+if ($sayur->count() >= 0) {
+    ?><div class="row">
+    <h4 class="item-category col-12">Sayur-sayuran</h4>
+    <?php foreach ($sayur as $sayurs) { $i++ ?>
+        <div class="col-4">
+            <div class="card card-item" style="width: 20rem;">
+                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $sayurs->getItemFoto() ?>">
+                <div class="card-body row">
+                    <h5 class="col-12"><?php echo $sayurs->item_nama; ?></h5>
+                    <p class="col-4">Rp<?php echo number_format(abs($sayurs->item_harga), 0, ".", ".") ?></p>
+                </div>
+                <div class="card-footer btn-cart">
+                    <a href="#" class="">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    </div>
+    <hr>
+    <?php
+}
+if ($rempah->count() >= 0) {
+    ?><div class="row">
+    <h4 class="item-category col-12">Rempah-rempahan</h4>
+    <?php foreach ($rempah as $rempahs) { $i++ ?>
+        <div class="col-4">
+            <div class="card card-item" style="width: 20rem;">
+                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $rempahs->getItemFoto() ?>">
+                <div class="card-body row">
+                    <h5 class="col-12"><?php echo $rempahs->item_nama; ?></h5>
+                    <p class="col-4">Rp<?php echo number_format(abs($rempahs->item_harga), 0, ".", ".") ?></p>
+                </div>
+                <div class="card-footer btn-cart">
+                    <a href="#" class="">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    </div>
+    <hr>
+    <?php
+}
+if ($lain->count() >= 0) {
+    ?><div class="row">
+    <h4 class="item-category col-12">Bahan makanan lain</h4>
+    <?php foreach ($lain as $lains) { $i++ ?>
+        <div class="col-4">
+            <div class="card card-item" style="width: 20rem;">
+                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $lains->getItemFoto() ?>">
+                <div class="card-body row">
+                    <h5 class="col-12"><?php echo $lains->item_nama; ?></h5>
+                    <p class="col-4">Rp<?php echo number_format(abs($lains->item_harga), 0, ".", ".") ?></p>
+                </div>
+                <div class="card-footer btn-cart">
+                    <a href="#" class="">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    </div>
+    <hr>
+    <?php
+}
+
+
+

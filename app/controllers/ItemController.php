@@ -13,11 +13,6 @@ class ItemController extends ControllerBase
         $this->view->items = Item::find();
     }
     
-    public function lihatItemAction()
-    {
-        $this->view->items = Item::find();
-    }
-    
     public function detailItemAction($item_id)
     {
         $this->view->item = Item::findFirst([
