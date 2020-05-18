@@ -14,10 +14,7 @@ $router->add('/user/signuppage', ['controller' => 'user', 'action' => 'signuppag
 $router->add('/user/signup', ['controller' => 'user', 'action' => 'signup']);
 // $router->add('/user/profile', ['controller' => 'user', 'action' => 'profile']);
 $router->add('/user/logout', ['controller' => 'user', 'action' => 'logout']);
-<<<<<<< HEAD
 $router->add('/user/manageuser', ['controller' => 'user', 'action' => 'aturuser']);
-=======
->>>>>>> cbc3f098aa118f056a8473396f544a38ffda0901
 
 $router->add('/item/manageitem', ['controller' => 'item', 'action' => 'aturitem']);
 

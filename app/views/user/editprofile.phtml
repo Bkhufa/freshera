@@ -1,0 +1,40 @@
+<?php
+    echo "<div class='card frame fsmall'><div class='card-body'>";
+    echo "<h2 class=' text-center'>Edit Profil</h2>";
+    echo "</div>";
+?>
+<div class="card">
+    <div class="card-body">
+        <?php echo $this->tag->form("user/editedprofile"); ?>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="name">Full Name</label>
+                <?php echo $this->tag->textField(['name', "class" => "form-control", "value" => $this->session->get('name'), "required" => "1" ]); ?>
+            </div>
+
+            <div class="form-group col-6">
+                <label for="phone">Phone Number</label>
+                <?php echo $this->tag->textField(["phone", "class" => "form-control", "value" => $this->session->get('phone'), "required" => "1" ]); ?>
+            </div>
+
+            <div class="form-group col-6">
+                <label for="email">Email</label>
+                <?php echo $this->tag->emailField(["email", "class" => "form-control", "value" => $this->session->get('email'), "required" => "1" ]); ?>
+            </div>
+
+            <div class="form-group col-6">
+                <label for="password">Password</label>
+                <?php echo $this->tag->passwordField(["password", "class" => "form-control", "value" => $this->session->get('password'), "required" => "1"]); ?>
+            </div>
+
+            <div class="form-group col-12">
+                <label for="address">Address</label>
+                <?php echo $this->tag->textField(["address", "class" => "form-control", "value" => $this->session->get('address'), "required" => "1" ]); ?>
+            </div>
+            <?= $this->tag->linkTo(["user/profile", 'Cancel Edit', "class" => "btn btn-danger col-3 offset-3"]); 
+            echo "&nbsp", $this->tag->submitButton(["Save", "class" => "btn btn-primary col-3"]); ?>
+        </div>
+
+    </form>
+    </div>
+</div>
