@@ -1,8 +1,8 @@
 :root {
-    --color-1: #408C2B;
-    --color-2: #B9D948;
-    --color-3: #47A638;
-    --color-4: #66F58C;
+    --color-1: #388e3c;
+    --color-2: #8bc34a;
+    --color-3: #dce775;
+    --color-4: #fff59d;
     --color-white: #fcfcfc;
 }
 
@@ -44,6 +44,17 @@ body {
     color: white;
 }
 
+.btn-green{
+    background-color: var(--color-1);
+    color: var(--color-white);
+    text-align: center;
+}
+.btn-green:hover {
+    color: var(--color-4);
+    text-decoration: none;
+    opacity: 90%;
+}
+
 a {
     color: var(--color-1);
 }
@@ -61,7 +72,6 @@ label {
     margin: 20px auto;
 }
 
-
 /* INDEX.PHTML */
 .card-container{
     margin-bottom: 20px;
@@ -75,16 +85,38 @@ label {
     border-radius: 20px 20px 0px 0px !important;
 }
 
-.btn-cart{
+.btn-cart {
     border-radius: 0px 0px 20px 20px !important;
-    background-color: var(--color-1);
-    text-align: center;
 }
-.btn-cart a {
-    color: var(--color-white);
-}
+
 
 .item-category {
     color: var(--color-1);
     margin: 20px 0;
+}
+
+
+/* DETAIL ITEM */
+
+.item-data {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+hr {
+    margin: 5px auto;
+}
+
+.btn-jumlah {
+    margin-top: 25px;
+    font-size: 2em;
+    font-weight: 600;
+    line-height: 0px;
+    height: 40%;
+}
+
+.jml input[type=number]::-webkit-inner-spin-button, 
+ input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }

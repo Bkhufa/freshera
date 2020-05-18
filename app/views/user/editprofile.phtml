@@ -1,12 +1,7 @@
 <?php
     echo "<div class='card frame fsmall'><div class='card-body'>";
-    echo "<h2 class=' text-center'>Edit Profil</h2>";
-    echo "<p><?php echo $this->flashSession->output() ?></p>";
-    echo "</div>";
+    echo "<h2 class=' text-center'>Edit Profil</h2> <hr>";
 ?>
-<div class="card">
-    <div class="card-body">
-        <p><?php echo $this->flashSession->output() ?></p>
         <?php echo $this->tag->form("user/editedprofile"); ?>
         <div class="row">
             <div class="form-group col-6">
@@ -38,5 +33,3 @@
         </div>
 
     </form>
-    </div>
-</div>
