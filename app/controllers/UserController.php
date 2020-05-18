@@ -97,7 +97,7 @@ class UserController extends ControllerBase
         $email = $this->session->get("email");
         $success = false;
         
-        $exist = Users::findFirst(
+        $exist = User::findFirst(
             [
                 'conditions' => 'email = :email:',
                 'bind'       => [
@@ -189,12 +189,11 @@ class UserController extends ControllerBase
         }
     }
 
-<<<<<<< HEAD
     public function aturUserAction()
     {
         $this->authorized();
         $this->view->users = User::find([
-            'conditions' => 'is_admin != 1',
+            'conditions' => 'is_admin is null',
         ]);
     }
 
@@ -279,6 +278,4 @@ class UserController extends ControllerBase
         }
     }
 
-=======
->>>>>>> cbc3f098aa118f056a8473396f544a38ffda0901
 }

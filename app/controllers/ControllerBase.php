@@ -33,7 +33,7 @@ class ControllerBase extends Controller
     public function isLoggedIn()
     {
         // Check if the variable is defined
-        if ($this->session->has(`name`) ){
+        if ($this->session->has('name') ){
             return true;
         }
         return false;
