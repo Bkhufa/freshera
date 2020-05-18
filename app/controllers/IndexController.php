@@ -16,7 +16,7 @@ class IndexController extends ControllerBase
             'conditions' => 'item_kategori = "Rempah"',
         ]);
         $this->view->lain = Item::find([
-            'conditions' => 'item_kategori = "Lain"',
+            'conditions' => 'item_kategori = "Lainnya"',
         ]);
     }
 
