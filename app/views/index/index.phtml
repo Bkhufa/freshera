@@ -4,7 +4,7 @@ echo "<h2 class='text-center'>Welcome to Freshera!</h2>";
 echo "</div></div><hr>";
 $i = 0;
 
-if ($buah->count() >= 0) {
+if ($buah->count() > 0) {
     ?><div class="row">
     <h4 class="item-category col-12">Buah-buahan</h4>
     <?php foreach ($buah as $buahs) { $i++ ?>
@@ -15,9 +15,13 @@ if ($buah->count() >= 0) {
                     <h5 class="col-8"><?php echo $buahs->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($buahs->item_harga), 0, ".", ".") ?></p>
                 </div>
-                <div class="card-footer btn-cart">
-                    <a href="#" class="">Add to Cart</a>
-                </div>
+                <?php
+                    echo $this->tag->linkTo([
+                        "/item/detailitem/".$buahs->item_id,
+                        'Pesan Sekarang',
+                        "class" => "card-footer btn-green btn-cart",
+                    ]);
+                ?>
             </div>
         </div>
     <?php } ?>
@@ -26,7 +30,7 @@ if ($buah->count() >= 0) {
     <?php
 }
 
-if ($sayur->count() >= 0) {
+if ($sayur->count() > 0) {
     ?><div class="row">
     <h4 class="item-category col-12">Sayur-sayuran</h4>
     <?php foreach ($sayur as $sayurs) { $i++ ?>
@@ -37,9 +41,13 @@ if ($sayur->count() >= 0) {
                     <h5 class="col-12"><?php echo $sayurs->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($sayurs->item_harga), 0, ".", ".") ?></p>
                 </div>
-                <div class="card-footer btn-cart">
-                    <a href="#" class="">Add to Cart</a>
-                </div>
+                <?php
+                    echo $this->tag->linkTo([
+                        "/item/detailitem/".$buahs->item_id,
+                        'Pesan Sekarang',
+                        "class" => "card-footer btn-cart",
+                    ]);
+                ?>
             </div>
         </div>
     <?php } ?>
@@ -47,7 +55,7 @@ if ($sayur->count() >= 0) {
     <hr>
     <?php
 }
-if ($rempah->count() >= 0) {
+if ($rempah->count() > 0) {
     ?><div class="row">
     <h4 class="item-category col-12">Rempah-rempahan</h4>
     <?php foreach ($rempah as $rempahs) { $i++ ?>
@@ -58,9 +66,13 @@ if ($rempah->count() >= 0) {
                     <h5 class="col-12"><?php echo $rempahs->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($rempahs->item_harga), 0, ".", ".") ?></p>
                 </div>
-                <div class="card-footer btn-cart">
-                    <a href="#" class="">Add to Cart</a>
-                </div>
+                <?php
+                    echo $this->tag->linkTo([
+                        "/item/detailitem/".$buahs->item_id,
+                        'Pesan Sekarang',
+                        "class" => "card-footer btn-cart",
+                    ]);
+                ?>
             </div>
         </div>
     <?php } ?>
@@ -68,7 +80,7 @@ if ($rempah->count() >= 0) {
     <hr>
     <?php
 }
-if ($lain->count() >= 0) {
+if ($lain->count() > 0) {
     ?><div class="row">
     <h4 class="item-category col-12">Bahan makanan lain</h4>
     <?php foreach ($lain as $lains) { $i++ ?>
@@ -79,9 +91,13 @@ if ($lain->count() >= 0) {
                     <h5 class="col-12"><?php echo $lains->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($lains->item_harga), 0, ".", ".") ?></p>
                 </div>
-                <div class="card-footer btn-cart">
-                    <a href="#" class="">Add to Cart</a>
-                </div>
+                <?php
+                    echo $this->tag->linkTo([
+                        "/item/detailitem/".$buahs->item_id,
+                        'Pesan Sekarang',
+                        "class" => "card-footer btn-cart",
+                    ]);
+                ?>
             </div>
         </div>
     <?php } ?>
