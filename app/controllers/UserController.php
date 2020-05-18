@@ -270,6 +270,10 @@ class UserController extends ControllerBase
         } 
         if (!$exist)
         {
+            if ($user->is_admin = null)
+                $is_admin = null;
+            if ($user->is_admin != null)
+                $is_admin = 1;
             if ($user !== false) {
                 if ($user->delete() === false) {
                     $messages = $user->getMessages();
@@ -278,12 +282,80 @@ class UserController extends ControllerBase
                         $msg = $msg." ".$message.".";
                     }
                     $this->flashSession->error($msg);
-                    return $this->response->redirect('user/aturuser');
+                    if ($is_admin = null)
+                        header("refresh:2;url=/user/aturuser");
+                    if ($is_admin != null)
+                        header("refresh:2;url=/user/aturpegawai");
                 } else {
-                    $this->flashSession->success("Data user berhasil dihapus!");
-                    return $this->response->redirect('user/aturuser');
+                    echo "<div class='alert alert-success'> Data berhasil dihapus!</div>";
+                    if ($is_admin = null)
+                        header("refresh:2;url=/user/aturuser");
+                    if ($is_admin != null)
+                        header("refresh:2;url=/user/aturpegawai");
                 }
             }
         }
     }
+
+    public function aturPegawaiAction()
+    {
+        $this->authorized();
+        $this->view->users = User::find([
+            'conditions' => 'is_admin is not null',
+        ]);
+    }
+
+    public function tambahPegawaiAction()
+    {
+        $user = new User();
+        $email = $this->request->getPost('email');
+
+        if($this->request->isPost())
+        {
+            $exist = User::findFirst(     
+                [
+                    'conditions' => 'email = :email:',
+                    'bind'       => [
+                        'email' => $email,
+                    ],
+                ]
+            );
+    
+            if($exist)
+            {
+                // $this->view->message = "<div class='alert alert-danger'> Email already used, please use a new one! </div>";
+                $success = false;
+                header("refresh:2;url=/user/signuppage");
+                echo "<div class='alert alert-danger'> Email already used, please use a new one! </div>";
+                
+            } else
+            {
+                $dataSent = $this->request->getPost();
+
+                $security = new Security();
+                
+                $hashed = $security->hash("admin");
+                $user->name = $dataSent["name"];
+                $user->email = $dataSent["email"];
+                $user->password = $hashed;
+                $user->phone = $dataSent["phone"];
+                $user->address = $dataSent["address"];
+                $user->is_admin = $dataSent["kategori"];
+    
+                $success = $user->save();
+            }
+        }
+        if (!$success) {
+            $messages = $user->getMessages();
+
+            foreach ($messages as $message) {
+                echo "<div class='alert alert-danger'>", $message->getMessage(), "</div>";
+            }
+            header("refresh:2;url=/user/aturpegawai");
+        } else {
+            echo "<div class='alert alert-success'> Pegawai baru berhasil ditambahkan! </div>";
+            header("refresh:2;url=/user/aturpegawai");
+        }
+    }
+
 }
