@@ -48,6 +48,12 @@ class Item extends Model
 
     /**
      *
+     * @var int
+     */
+    public $status_diskon;
+
+    /**
+     *
      * @var string
      * @Column(column="created", type="string", nullable=false)
      */
