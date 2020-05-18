@@ -30,70 +30,21 @@ if ($buah->count() > 0) {
     <?php
 }
 
+
 if ($sayur->count() > 0) {
     ?><div class="row">
     <h4 class="item-category col-12">Sayur-sayuran</h4>
     <?php foreach ($sayur as $sayurs) { $i++ ?>
-        <div class="col-4">
+        <div class="card-container col-4">
             <div class="card card-item" style="width: 20rem;">
                 <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $sayurs->getItemFoto() ?>">
                 <div class="card-body row">
-                    <h5 class="col-12"><?php echo $sayurs->item_nama; ?></h5>
+                    <h5 class="col-8"><?php echo $sayurs->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($sayurs->item_harga), 0, ".", ".") ?></p>
                 </div>
                 <?php
                     echo $this->tag->linkTo([
-                        "/item/detailitem/".$buahs->item_id,
-                        'Pesan Sekarang',
-                        "class" => "card-footer btn-green btn-cart",
-                    ]);
-                ?>
-            </div>
-        </div>
-    <?php } ?>
-    </div>
-    <hr>
-    <?php
-}
-if ($rempah->count() > 0) {
-    ?><div class="row">
-    <h4 class="item-category col-12">Rempah-rempahan</h4>
-    <?php foreach ($rempah as $rempahs) { $i++ ?>
-        <div class="col-4">
-            <div class="card card-item" style="width: 20rem;">
-                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $rempahs->getItemFoto() ?>">
-                <div class="card-body row">
-                    <h5 class="col-12"><?php echo $rempahs->item_nama; ?></h5>
-                    <p class="col-4">Rp<?php echo number_format(abs($rempahs->item_harga), 0, ".", ".") ?></p>
-                </div>
-                <?php
-                    echo $this->tag->linkTo([
-                        "/item/detailitem/".$buahs->item_id,
-                        'Pesan Sekarang',
-                        "class" => "card-footer btn-green btn-cart",
-                    ]);
-                ?>
-            </div>
-        </div>
-    <?php } ?>
-    </div>
-    <hr>
-    <?php
-}
-if ($lain->count() > 0) {
-    ?><div class="row">
-    <h4 class="item-category col-12">Bahan makanan lain</h4>
-    <?php foreach ($lain as $lains) { $i++ ?>
-        <div class="col-4">
-            <div class="card card-item" style="width: 20rem;">
-                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $lains->getItemFoto() ?>">
-                <div class="card-body row">
-                    <h5 class="col-12"><?php echo $lains->item_nama; ?></h5>
-                    <p class="col-4">Rp<?php echo number_format(abs($lains->item_harga), 0, ".", ".") ?></p>
-                </div>
-                <?php
-                    echo $this->tag->linkTo([
-                        "/item/detailitem/".$buahs->item_id,
+                        "/item/detailitem/".$sayurs->item_id,
                         'Pesan Sekarang',
                         "class" => "card-footer btn-green btn-cart",
                     ]);
@@ -106,5 +57,56 @@ if ($lain->count() > 0) {
     <?php
 }
 
+if ($rempah->count() > 0) {
+    ?><div class="row">
+    <h4 class="item-category col-12">Rempah-rempahan</h4>
+    <?php foreach ($rempah as $rempahs) { $i++ ?>
+        <div class="card-container col-4">
+            <div class="card card-item" style="width: 20rem;">
+                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $rempahs->getItemFoto() ?>">
+                <div class="card-body row">
+                    <h5 class="col-8"><?php echo $rempahs->item_nama; ?></h5>
+                    <p class="col-4">Rp<?php echo number_format(abs($rempahs->item_harga), 0, ".", ".") ?></p>
+                </div>
+                <?php
+                    echo $this->tag->linkTo([
+                        "/item/detailitem/".$rempahs->item_id,
+                        'Pesan Sekarang',
+                        "class" => "card-footer btn-green btn-cart",
+                    ]);
+                ?>
+            </div>
+        </div>
+    <?php } ?>
+    </div>
+    <hr>
+    <?php
+}
+
+if ($lain->count() > 0) {
+    ?><div class="row">
+    <h4 class="item-category col-12">Bahan makanan lain</h4>
+    <?php foreach ($lain as $lains) { $i++ ?>
+        <div class="card-container col-4">
+            <div class="card card-item" style="width: 20rem;">
+                <img class="img-responsive center-block card-img-top" height="200" width="150" src="data:image/jpeg;base64,<?php echo $lains->getItemFoto() ?>">
+                <div class="card-body row">
+                    <h5 class="col-8"><?php echo $lains->item_nama; ?></h5>
+                    <p class="col-4">Rp<?php echo number_format(abs($lains->item_harga), 0, ".", ".") ?></p>
+                </div>
+                <?php
+                    echo $this->tag->linkTo([
+                        "/item/detailitem/".$lains->item_id,
+                        'Pesan Sekarang',
+                        "class" => "card-footer btn-green btn-cart",
+                    ]);
+                ?>
+            </div>
+        </div>
+    <?php } ?>
+    </div>
+    <hr>
+    <?php
+}
 
 

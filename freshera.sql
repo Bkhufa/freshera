@@ -96,6 +96,30 @@ INSERT INTO `item` (`item_id`, `item_nama`, `item_deskripsi`, `item_kategori`, `
 (1, 'Wortel', 'Wortel asli Indonesia', 'Sayur', '5000', '20', 'Pasar Keputih');
 
 
+-- CART & ORDER
+
+create table scOrder (
+sc_id int auto_increment,
+sc_date datetime,
+sc_alamat varchar(30),
+primary key(sc_id)
+);
+
+
+create table `order` (
+order_id int auto_increment,
+productid int,
+-- orderid int,
+userid int,
+order_quantity int,
+order_subtotal decimal(18,3),
+order_foto longblob,
+primary key(order_id),
+foreign key(productid) references item(item_id),
+-- foreign key(orderid) references scOrder(sc_id)
+foreign key(userid) references user(id)
+);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
