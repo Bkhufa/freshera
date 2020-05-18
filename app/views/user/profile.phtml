@@ -3,14 +3,10 @@
     echo "<div class='card text-center frame fsmall'><div class='card-body row'>";
     echo "<h2 class='card-title col-12'>Profile</h2><hr class='col-10'>";
 ?>
-    <!-- <div class="card"> -->
-        <!-- <div class="card-body"> -->
-            <h5 class="col-12 card-title" style="color:var(--color-1);"><?= $this->session->get('name') ?></h5>
-            <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('email') ?></p>
-            <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('phone') ?></p>
-            <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('address') ?></p>
-            <?= $this->tag->linkTo(["user/logout", 'Logout <i class="fas fa-sign-out-alt" aria-hidden="true"></i> ', "class" => "btn btn-danger col-4 offset-2"]); 
-              echo "&nbsp", $this->tag->linkTo(["user/editProfile", '<i class="fas fa-edit" aria-hidden="true"></i> Edit Profile', "class" => "btn btn-primary col-4"]); ?>
-        <!-- </div> -->
-    <!-- </div> -->
+    <h5 class="col-12 card-title" style="color:var(--color-1);"><?= $this->session->get('name') ?></h5>
+    <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('email') ?></p>
+    <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('phone') ?></p>
+    <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('address') ?></p>
+    <?= $this->tag->linkTo(["user/logout", 'Logout <i class="fas fa-sign-out-alt" aria-hidden="true"></i> ', "class" => "btn btn-danger col-4 offset-2"]); 
+        echo "&nbsp", $this->tag->linkTo(["user/editProfile", '<i class="fas fa-edit" aria-hidden="true"></i> Edit Profile', "class" => "btn btn-primary col-4"]); ?>
 </div>
