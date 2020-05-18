@@ -189,6 +189,7 @@ class UserController extends ControllerBase
         }
     }
 
+<<<<<<< HEAD
     public function aturUserAction()
     {
         $this->authorized();
@@ -278,4 +279,6 @@ class UserController extends ControllerBase
         }
     }
 
+=======
+>>>>>>> cbc3f098aa118f056a8473396f544a38ffda0901
 }
