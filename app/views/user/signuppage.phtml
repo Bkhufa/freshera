@@ -1,0 +1,52 @@
+
+<div class="frame fsmall">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center card-title">Sign up</h2><hr>
+        
+    <p><?php echo $this->flashSession->output() ?></p>
+
+        <?php echo $this->tag->form("user/signup"); ?>
+
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="name">Full Name</label>
+                    <?php echo $this->tag->textField(['name', "class" => "form-control"]); ?>
+                </div>
+
+                <div class="form-group col-6">
+                    <label for="phone">Phone Number</label>
+                    <?php echo $this->tag->textField(["phone", "class" => "form-control"]); ?>
+                </div>
+
+                <div class="form-group col-12">
+                    <label for="email">Email</label>
+                    <?php echo $this->tag->emailField(["email", "class" => "form-control"]); ?>
+                </div>
+
+                <div class="form-group col-12">
+                    <label for="password">Password</label>
+                    <?php echo $this->tag->passwordField(["password", "class" => "form-control", "required" => "1"]); ?>
+                </div>
+                
+                
+                <div class="form-group col-12">
+                    <label for="address">Address</label>
+                    <?php echo $this->tag->textField(["address", "class" => "form-control"]); ?>
+                </div>
+                <br>
+                
+                <div class="form-group text-center col-12">
+                <?php 
+                    echo $this->tag->submitButton(["Sign Up", "class" => "btn btn-primary btn1"]), PHP_EOL; 
+                    echo "<br>", "Already have an account? &nbsp";
+                    echo $this->tag->linkTo("/user/loginpage", "Login");
+                ?>
+                </div>
+            </div>
+        </form>
+
+        </div>
+    </div>
+
+</div>

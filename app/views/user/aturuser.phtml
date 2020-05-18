@@ -1,0 +1,119 @@
+<?php
+echo "<div class='card'><div class='card-body'>";
+echo "<h2 class='text-center'>Manage User</h2>";
+echo "</div></div><hr>";
+$i = 0;
+
+if ($users->count() >= 0) {
+    ?>
+    <table class="table table-bordered table-hover text-center align-bottom">
+        <thead class="thead bg-secondary text-white ">
+        <tr>
+            <th class="align-middle">#</th>
+            <th class="align-middle">Nama</th>
+            <th class="align-middle">Email</th>
+            <th class="align-middle">Nomor Telepon</th>
+            <th class="align-middle">Alamat</th>
+            <th class="align-middle">Action</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white">
+        <?php foreach ($users as $user) { $i++ ?>
+            <tr>
+                <td class="align-middle"><?php echo $i ?></td>
+                <td class="align-middle"><?php echo $user->name; ?></td>
+                <td class="align-middle"><?php echo $user->email; ?></td>
+                <td class="align-middle"><?php echo $user->phone; ?></td>
+                <td class="align-middle text-left"><?php echo $user->address; ?></td>
+                <td class="align-middle" >
+                    <a style="width:45px;" href="#modal-edit" class="btn btn-info" data-toggle="modal" data-placement="top" title="Edit User"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                    <a style="width:45px; margin: 5px auto" href="#modal-delete" class="btn btn-danger" data-toggle="modal" data-placement="top" title="Hapus User"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    <?php
+}
+?>
+<!-- Modal -->
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <?php echo $this->tag->form("user/edituser/".$user->id); ?> -->
+      <?php
+        echo $this->tag->form(
+          [
+            "user/edituser/".$user->id,
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "enctype" => "multipart/form-data"
+          ]
+        );
+       ?> 
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-6 form-group">
+                  <label for="name">Nama</label>
+                  <?php echo $this->tag->textField(["name", "class" => "form-control", "value" => $user->name]); ?>
+              </div>
+
+              <div class="col-6 form-group">
+                    <label for="phone">Phone Number</label>
+                    <?php echo $this->tag->textField(["phone", "class" => "form-control", "value" => $user->phone]); ?>
+                </div>
+
+              <div class="col-12 form-group">
+                  <label for="email">Email</label>
+                  <?php echo $this->tag->emailField(['email', "class" => "form-control", "value" => $user->email]); ?>
+              </div>
+
+              <div class="col-12 form-group">
+                  <label for="address">Address</label>
+                  <?php echo $this->tag->textField(['address', "class" => "form-control", "value" => $user->address]); ?>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <?php echo $this->tag->submitButton(["Submit", "class" => "btn btn-primary"]), PHP_EOL; ?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+        
+<div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Hapus User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?php echo "Apakah anda yakin akan menghapus user <strong>", $user->name, "</strong>"; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <?php
+            echo $this->tag->linkTo([
+                "/user/hapususer/".$user->id,
+                'Ya ',
+                "class" => "btn btn-danger",
+                "data-toggle" =>"tooltip",
+                "data-placement" => "top",
+                'title' => "Hapus User"
+            ]);
+        ?>
+      </div>
+    </div>
+  </div>
+</div>        

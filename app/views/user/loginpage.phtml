@@ -1,0 +1,28 @@
+<div class="frame fsmall">
+    <div class="card">
+        <div class="card-body">
+        <h2 class="text-center card-title">Login</h2><hr>
+        <?php echo $this->tag->form("user/login"); ?>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <?php echo $this->tag->emailField(['email', "class" => "form-control"]); ?>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <?php echo $this->tag->passwordField(['password', "class" => "form-control"]); ?>
+            </div>
+            <br>
+
+            <div class="form-group text-center">
+                <?php 
+                    echo $this->tag->submitButton(["Login", "class" => "btn btn-primary btn1"]), PHP_EOL; 
+                    echo "<br>", "Don't have an account yet? &nbsp";
+                    echo $this->tag->linkTo("/user/signuppage", "Sign Up");
+                ?>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

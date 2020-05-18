@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Freshera</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <?php
+            echo $this->tag->stylesheetLink('css/style.css');
+        ?>
+    </head>
+    <body>
+            <nav class="navbar fixed-top navbar-expand-lg navbar-dark" style="background-color: #4caf50">
+                <div class="navbar-brand ">
+                    <?php
+                        # Check User Login
+                        if ($this->session->has('name'))
+                        {
+                            echo $this->tag->linkTo([
+                                "/",
+                                'Admin &nbsp;<i class="fa fa-user-cog"></i> ',
+                                "class" => "navbar-brand text-white"
+                            ]);
+                        } else 
+                        {
+                            echo $this->tag->linkTo([
+                                "/",
+                                'Freshera',
+                                "class" => "navbar-brand"
+                            ]);
+                        }
+                    ?>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <?php
+                            # Check User Login
+                            if ($this->session->get('is_admin') != null)
+                            {
+                                echo "<li class='nav-item'>", $this->tag->linkTo([
+                                    "/user/aturuser",
+                                    'Kelola User',
+                                    "class" => "nav-link"
+                                ]), "</li>";
+
+                                echo "&nbsp;";
+
+                                echo "<li class='nav-item'>", $this->tag->linkTo([
+                                    "/item/aturitem",
+                                    'Kelola Item',
+                                    "class" => "nav-link"
+                                ]), "</li>";
+
+                                echo "&nbsp;";
+                            }
+                        ?>
+
+                    </ul>
+                    <ul class="nav navbar-nav ml-auto">
+                        <?php
+                            # Check User Login
+                            if ($this->session->has('name'))
+                            {
+                                echo "<li class='nav-item'>", $this->tag->linkTo([
+                                    "user/profile",
+                                    '<i class="fas fa-user-circle" aria-hidden="true"></i> Profile',
+                                    "class" => "nav-link"
+                                ]), "</li>";
+
+                                echo "&nbsp;";
+
+                                echo "<li class='nav-item'>", $this->tag->linkTo([
+                                    "user/logout",
+                                    'Logout <i class="fas fa-sign-out-alt" aria-hidden="true"></i>',
+                                    "class" => "nav-link"
+                                ]), "</li>";
+                            } 
+                            else 
+                            {
+                                echo "<li class='nav-item'>", $this->tag->linkTo([
+                                    "user/loginpage",
+                                    '<i class="fas fa-user-circle" aria-hidden="true"></i> Login',
+                                    "class" => "nav-link"
+                                ]), "</li>";
+                                echo "&nbsp;";
+        
+                                echo "<li class='nav-item'>", $this->tag->linkTo([
+                                    "user/signuppage",
+                                    '<i class="fas fa-sign-in-alt" aria-hidden="true"></i> Signup',
+                                    "class" => "nav-link"
+                                ]), "</li>";
+                            }
+                        ?>
+                    </ul>
+                </div>
+        </nav>
+        <div class="container" style="margin: 100px auto">
+            <?php echo $this->getContent(); ?>
+        </div>
+        <!-- jQuery first, then Popper.js, and then Bootstrap's JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script>
+            $('.datepicker').datepicker();
+        </script>
+    </body>
+</html>
