@@ -6,7 +6,7 @@
                             height="360" width="260" 
                             src="data:image/jpeg;base64,<?php echo $item->getItemFoto() ?>">
             <div class="col-8 row">
-                <p class="col-12 item-data"><i class="fas fa-tag">&nbsp;</i>&nbsp;<b>Harga:</b> Rp&nbsp;<?php echo number_format(abs($item->item_harga), 0, ".", ".") ?></p><hr class="col-11">
+                <p class="col-12 item-data"><i class="fas fa-tag">&nbsp;</i>&nbsp;<b>Harga:</b> Rp&nbsp;<span id="harga"><?php echo number_format(abs($item->item_harga), 0, ".", ".") ?></span></p><hr class="col-11">
                 <p class="col-12 item-data"><i class="fas fa-boxes">&nbsp;</i>&nbsp;<b>Stock:</b>&nbsp;<?php echo $item->item_stock; ?></p><hr class="col-11">
                 <p class="col-12 item-data"><i class="fas fa-map-marker-alt">&nbsp;</i>&nbsp;<b>Lokasi:</b>&nbsp;<?php echo $item->item_lokasi; ?></p><hr class="col-11">
                 <p class="col-12 item-data"><b>Deskripsi:</b><br><?php echo $item->item_deskripsi; ?></p>
@@ -22,24 +22,24 @@
                     );
                 ?>  
                     <button type="button" class="col-1 offset-1 btn btn-jumlah btn-green" onclick="kurangJumlah()">-</button>
-                    <div class="col-8 form-group jml">
-                        <label for="jumlah">Jumlah</label>
+                    <div class="col-8 form-group jml text-center">
+                        <label for="jumlah">Jumlah: </label>
                         <?php echo $this->tag->numericField(["jumlah", "id" => "jumlah", "class" => "form-control text-center", "step" => "1", "min" => "0", "value" => "1"]); ?>
                     </div>
                     <button type="button" class="col-1 btn btn-jumlah btn-green" onclick="tambahJumlah()">+</button>
 
                     <div class="text-center col-12">
-                        <a href="#modal-daftar" class="col-12 btn btn-green align-middle" data-toggle="modal" data-placement="top" title="Daftar Kegiatan">Beli Sekarang</a>
+                        <a href="#modal-pesan" class="col-12 btn btn-green align-middle" data-toggle="modal" data-placement="top" onclick="updateJumlah()">Beli Sekarang</a>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="modal fade" id="modal-daftar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="modal-pesan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <?php echo '<h5 class="modal-title" id="exampleModalLongTitle">Daftar ', $item->item_nama,'</h5>'; ?>
+                    <?php echo '<h5 class="modal-title" id="exampleModalLongTitle">Pesan ', $item->item_nama,'</h5>'; ?>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -47,7 +47,7 @@
                 <?php
                     echo $this->tag->form(
                         [
-                            "item/daftaritem/".$item->item_id,
+                            "order/tambahorder/".$item->item_id,
                             "autocomplete" => "off",
                             "class" => "form-horizontal",
                             "enctype" => "multipart/form-data"
@@ -56,26 +56,16 @@
                 ?>  
                 <div class="modal-body">
                     <div class="row">
-                            <div class="col-6 form-group">
-                                <label for="pendaftar_nama">Nama</label>
-                                <?php echo $this->tag->textField(["pendaftar_nama", "class" => "form-control", "required" => "1"]); ?>
-                            </div>
-
-                            <div class="col-6 form-group">
-                                <label for="pendaftar_contact">Email</label>
-                                <?php echo $this->tag->textField(["pendaftar_contact", "class" => "form-control", "required" => "1"]); ?>
-                            </div>
-                                            
-                            <div class="col-12 form-group">
-                                <label for="pendaftar_alamat">Alamat</label>
-                                <?php echo $this->tag->textArea(["pendaftar_alamat", "class" => "form-control", "required" => "1"]); ?>
-                            </div>
-                            
+                        <?php echo '<p class="col-12">Anda akan membeli <b>', $item->item_nama,'</b></p>'; ?>
+                        <?php echo '<p class="col">Jumlah: <input size="3" style="border:none" type="text" readonly id="modal-jumlah" name="modal-jumlah"></p>'; ?>
+                        <?php echo '<p class="col">Total: Rp <input size="3" style="border:none" type="text" readonly id="modal-harga" name="modal-harga"></p>'; ?>
+                        
+                        <!-- <?php echo '<p class="col">Total: Rp<span id="modal-harga"></span></p>'; ?> -->
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <?php echo $this->tag->submitButton(["Submit", "class" => "btn btn-primary"]), PHP_EOL; ?>
+                    <?php echo $this->tag->submitButton(["Checkout", "class" => "btn btn-primary"]), PHP_EOL; ?>
                 </div>
                 </form>
                 </div>
