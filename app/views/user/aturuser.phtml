@@ -2,6 +2,7 @@
 echo "<div class='card'><div class='card-body'>";
 echo "<h2 class='text-center'>Manage User</h2>";
 echo "</div></div><hr>";
+echo $this->flashSession->output();
 $i = 0;
 
 if ($users->count() >= 0) {
