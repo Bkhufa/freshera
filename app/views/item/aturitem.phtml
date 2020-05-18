@@ -2,6 +2,7 @@
 echo "<div class='card'><div class='card-body'>";
 echo "<h2 class='text-center'>Manage Item</h2>";
 echo "</div></div><hr>";
+echo $this->flashSession->output();
 $i = 0;
 
 if ($items->count() >= 0) {
@@ -17,6 +18,7 @@ if ($items->count() >= 0) {
             <th class="align-middle">Harga</th>
             <th class="align-middle">Lokasi</th>
             <th class="align-middle">Stock</th>
+            <th class="align-middle">Diskon</th>
             <th><a href="#modal-tambah" class="btn btn-primary" data-toggle="modal" data-placement="top" title="Tambah item baru"><i class="fas fa-plus" aria-hidden="true"></i></a></th>
         </tr>
         </thead>
@@ -34,7 +36,9 @@ if ($items->count() >= 0) {
                 <td class="align-middle"><?php echo $item->item_harga; ?></td>
                 <td class="align-middle"><?php echo $item->item_lokasi; ?></td>
                 <td class="align-middle"><?php echo $item->item_stock; ?></td>
+                <td class="align-middle"><?php echo $item->status_diskon; ?>%</td>
                 <td class="align-middle" >
+                <a style="width:45px;" href="#modal-diskon" class="btn btn-success" data-toggle="modal" data-placement="top" title="Atur Diskon Item"><i class="fas fa-percent" aria-hidden="true"></i></a>
                     <a style="width:45px;" href="#modal-edit" class="btn btn-info" data-toggle="modal" data-placement="top" title="Edit Item"><i class="fas fa-edit" aria-hidden="true"></i></a>
                     <a style="width:45px; margin: 5px auto" href="#modal-delete" class="btn btn-danger" data-toggle="modal" data-placement="top" title="Hapus Item"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                 </td>
@@ -100,6 +104,43 @@ if ($items->count() >= 0) {
               <div class="col-12 form-group">
                   <label for="item_deskripsi">Deskripsi Item</label>
                   <?php echo $this->tag->textArea(["item_deskripsi", "class" => "form-control", "required" => "1"]); ?>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <?php echo $this->tag->submitButton(["Submit", "class" => "btn btn-primary"]), PHP_EOL; ?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-diskon" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Atur Diskon Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <?php echo $this->tag->form("item/aturdiskon/".$item->item_id); ?> -->
+      <?php
+        echo $this->tag->form(
+          [
+            "item/aturdiskon/".$item->item_id,
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "enctype" => "multipart/form-data"
+          ]
+        );
+       ?> 
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-12 form-group">
+                  <label for="status_diskon">Kategori</label>
+                  <?php echo $this->tag->selectStatic(['status_diskon',[0 => 0, 20 => 20, 30 => 30, 50 => 50], "class" => "form-control", "value" => $item->status_diskon]); ?>
               </div>
             </div>
         </div>

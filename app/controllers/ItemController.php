@@ -39,22 +39,26 @@ class ItemController extends ControllerBase
             $item->item_harga = $dataSent["item_harga"];
             $item->item_stock = $dataSent["item_stock"];
             $item->item_lokasi = $dataSent["item_lokasi"];
+            $item->status_diskon = 0;
             $item->setItemFoto(base64_encode(file_get_contents($this->request->getUploadedFiles()[0]->getTempName())));
 
             $success = $item->save();
         }
         if($success)
         {
-            echo "<div class='alert alert-success'> Data saved! </div>";
-            header("refresh:2;url=/item/aturitem");
+            $this->flashSession->success("Data item tersimpan!");
+            return $this->response->redirect('item/aturitem');
         } else 
         {
             $messages = $item->getMessages();
 
+            $msg = "";
             foreach ($messages as $message) {
-                echo "<div class='alert alert-danger'>", $message->getMessage(), "</div>";
+                $msg = $msg." ".$message.".";
             }
-            header("refresh:2;url=/item/aturitem");
+            $this->flashSession->error($msg);
+
+            return $this->response->redirect('item/aturitem');
         }
     }
 
@@ -85,16 +89,62 @@ class ItemController extends ControllerBase
         }
         if($success)
         {
-            echo "<div class='alert alert-success'> Data berhasil diubah! </div>";
-            header("refresh:2;url=/item/aturitem");
+            $this->flashSession->success("Data berhasil diubah!");
+            return $this->response->redirect('item/aturitem');
         } else 
         {
             $messages = $item->getMessages();
 
-                foreach ($messages as $message) {
-                    echo "<div class='alert alert-danger'>", $message,  "</div><br>";
-                }
-            header("refresh:2;url=/item/aturitem");
+            $msg = "";
+            foreach ($messages as $message) {
+                $msg = $msg." ".$message.".";
+            }
+            $this->flashSession->error($msg);
+
+            return $this->response->redirect('item/aturitem');
+        }
+    }
+
+    public function aturDiskonAction($item_id)
+    {
+        $this->authorized();
+        $success = false;
+        $dataSent = $this->request->getPost();
+
+        $exist = Item::findFirst([
+            'conditions' => 'item_id = :item_id:',
+            'bind'       => [
+                'item_id' => $item_id,
+            ],
+        ]);
+ 
+        if($exist)
+        {
+            // vardump($dataSent(["status_diskon"]));
+            if($dataSent["status_diskon"] == 0) {
+                $exist->item_harga = (100/(100-$exist->status_diskon))*$exist->item_harga;
+            }
+            else if($exist->status_diskon == 0) {
+                $exist->item_harga = (100-$dataSent["status_diskon"])*$exist->item_harga*0.01;
+            }
+            else {
+                $exist->item_harga = (100/(100-$exist->status_diskon)*$exist->item_harga); 
+                $exist->item_harga = (100-$dataSent["status_diskon"])*$exist->item_harga*0.01;
+            }
+            
+            $exist->status_diskon = $dataSent["status_diskon"];
+
+            $success = $exist->update();
+        }
+        if($success)
+        {
+            $this->flashSession->success("Atur diskon berhasil!");
+            return $this->response->redirect('item/aturitem');
+        } else 
+        {
+            $messages = $item->getMessages();
+            $this->flashSession->error($messages);
+            return $this->response->redirect('item/aturitem');
         }
     }
 
@@ -112,13 +162,15 @@ class ItemController extends ControllerBase
             if ($exist->delete() === false) {
                 $messages = $exist->getMessages();
 
-                foreach ($messages as $message) {
-                    echo "<div class='alert alert-danger'>", $message,  "</div><br>";
-                }
-                header("refresh:2;url=/item/aturitem/".$item_id);
+            $msg = "";
+            foreach ($messages as $message) {
+                $msg = $msg." ".$message.".";
+            }
+            $this->flashSession->error($msg);
+            return $this->response->redirect('item/aturitem');
             } else {
-                echo "<div class='alert alert-success'> Item berhasil dihapus!</div>";
-                header("refresh:2;url=/item/aturitem/".$item_id);
+                $this->flashSession->success("Data item berhasil dihapus!");
+                return $this->response->redirect('item/aturitem');
             }
         } 
         if (!$exist)
@@ -127,13 +179,15 @@ class ItemController extends ControllerBase
                 if ($item->delete() === false) {
                     $messages = $item->getMessages();
     
+                    $msg = "";
                     foreach ($messages as $message) {
-                        echo "<div class='alert alert-danger'>", $message,  "</div><br>";
+                        $msg = $msg." ".$message.".";
                     }
-                    header("refresh:2;url=/item/aturitem");
+                    $this->flashSession->error($msg);
+                    return $this->response->redirect('item/aturitem');
                 } else {
-                    echo "<div class='alert alert-success'> Item berhasil dihapus!</div>";
-                    header("refresh:2;url=/item/aturitem");
+                    $this->flashSession->success("Data item berhasil dihapus!");
+                    return $this->response->redirect('item/aturitem');
                 }
             }
         }

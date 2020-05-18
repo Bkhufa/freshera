@@ -255,13 +255,7 @@ class UserController extends ControllerBase
         if ($exist !== false) 
         {
             if ($exist->delete() === false) {
-                $messages = $exist->getMessages();
-
-                $msg = "";
-                foreach ($messages as $message) {
-                    $msg = $msg." ".$message.".";
-                }
-                $this->flashSession->error($msg);
+                $this->flashSession->error("Data user gagal dihapus");
                 return $this->response->redirect('user/aturuser');
             } else {
                 $this->flashSession->success("Data user berhasil dihapus!");
@@ -276,22 +270,17 @@ class UserController extends ControllerBase
                 $is_admin = 1;
             if ($user !== false) {
                 if ($user->delete() === false) {
-                    $messages = $user->getMessages();
-                    $msg = "";
-                    foreach ($messages as $message) {
-                        $msg = $msg." ".$message.".";
-                    }
-                    $this->flashSession->error($msg);
+                    $this->flashSession->error("Data user gagal dihapus!");
                     if ($is_admin = null)
-                        header("refresh:2;url=/user/aturuser");
+                    return $this->response->redirect('user/aturuser');
                     if ($is_admin != null)
-                        header("refresh:2;url=/user/aturpegawai");
+                    return $this->response->redirect('user/aturpegawai');
                 } else {
-                    echo "<div class='alert alert-success'> Data berhasil dihapus!</div>";
+                    $this->flashSession->success("Data user berhasil dihapus!");
                     if ($is_admin = null)
-                        header("refresh:2;url=/user/aturuser");
+                    return $this->response->redirect('user/aturuser');
                     if ($is_admin != null)
-                        header("refresh:2;url=/user/aturpegawai");
+                    return $this->response->redirect('user/aturpegawai');
                 }
             }
         }
@@ -325,8 +314,8 @@ class UserController extends ControllerBase
             {
                 // $this->view->message = "<div class='alert alert-danger'> Email already used, please use a new one! </div>";
                 $success = false;
-                header("refresh:2;url=/user/signuppage");
-                echo "<div class='alert alert-danger'> Email already used, please use a new one! </div>";
+                return $this->response->redirect('user/aturuser');
+                $this->flashSession->error("Email telah digunakan, gunakan email baru!");
                 
             } else
             {
@@ -348,13 +337,16 @@ class UserController extends ControllerBase
         if (!$success) {
             $messages = $user->getMessages();
 
+            $msg = "";
             foreach ($messages as $message) {
-                echo "<div class='alert alert-danger'>", $message->getMessage(), "</div>";
+                $msg = $msg." ".$message.".";
             }
-            header("refresh:2;url=/user/aturpegawai");
+            $this->flashSession->error($msg);
+            
+            return $this->response->redirect('user/aturpegawai');
         } else {
-            echo "<div class='alert alert-success'> Pegawai baru berhasil ditambahkan! </div>";
-            header("refresh:2;url=/user/aturpegawai");
+            $this->flashSession->success("Pegawai baru berhasil ditambahkan!");
+            return $this->response->redirect('user/aturpegawai');
         }
     }
 
