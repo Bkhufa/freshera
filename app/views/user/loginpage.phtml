@@ -2,6 +2,7 @@
     <div class="card">
         <div class="card-body">
         <h2 class="text-center card-title">Login</h2><hr>
+        <p><?php echo $this->flashSession->output() ?></p>
         <?php echo $this->tag->form("user/login"); ?>
 
             <div class="form-group">

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 use Phalcon\Di\FactoryDefault;
 
+use Phalcon\Flash\Session as FlashSession;
+
 error_reporting(E_ALL);
 
 define('BASE_PATH', dirname(__DIR__));
@@ -14,6 +16,21 @@ try {
      * the services that provide a full stack framework.
      */
     $di = new FactoryDefault();
+
+    $di->set(
+        'flashSession',
+        function () {
+            $flash = new FlashSession();
+            $flash->setCssClasses([
+                'error'   => 'alert alert-danger',
+                'success' => 'alert alert-success',
+                'notice'  => 'alert alert-info',
+                'warning' => 'alert alert-warning'
+            ]);
+
+            return $flash;
+        }
+    );
 
     /**
      * Read services

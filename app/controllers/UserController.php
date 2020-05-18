@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 use Phalcon\Security;
+use Phalcon\Http\Request;
+// use Phalcon\Flash\Session as FlashSession;
 // use Phalcon\Mvc\Controller;
 
 class UserController extends ControllerBase
@@ -14,62 +16,58 @@ class UserController extends ControllerBase
 
     public function loginpageAction()
     {
-       
+
     }
     
-    public function signuppageAction()
-    {
-       
-    }
-
     public function loginAction()
     {
         if($this->request->isPost())
         { 
-         $email    = $this->request->getPost('email');
-         $password = $this->request->getPost('password');
-         echo "</br>";
-         $user = User::findFirst(     // Nyari user berdasar Email yang diinput
-             [
-                 'conditions' => 'email = :email:',
-                 'bind'       => [
-                     'email' => $email,
-                 ],
-             ]
-         );
+            $email    = $this->request->getPost('email');
+            $password = $this->request->getPost('password');
+            echo "</br>";
+            $user = User::findFirst(     // Nyari user berdasar Email yang diinput
+                [
+                    'conditions' => 'email = :email:',
+                    'bind'       => [
+                        'email' => $email,
+                    ],
+                ]
+            );
  
-         if ($user) { //Memeriksa apakah user ada
-            $check = $this
-               ->security
-               ->checkHash($password, $user->password); //Memeriksa apakah password sesuai
+            if ($user) { //Memeriksa apakah user ada
+                $check = $this
+                ->security
+                ->checkHash($password, $user->password); //Memeriksa apakah password sesuai
 
-             if (true == $check) {  
-                 //Password benar
-                 $this->session->set('id', $user->id);
-                 $this->session->set('name', $user->name);
-                 $this->session->set('email', $user->email);
-                 $this->session->set('phone', $user->phone);
-                 $this->session->set('address', $user->address);
-                 $this->session->set('is_admin', $user->is_admin);
-                 
-                 return $this->dispatcher->forward(array( 
-                     'controller' => 'index',
-                     'action' => 'index' 
-                 )); 
-                 echo "<div class='alert alert-success'> You're Logged in! </div>";
-             }
-             else {
-                //Password salah
-                echo "<div class='alert alert-danger'> Wrong password! </div>";
-                header("refresh:2;url=/user/loginpage");
-             }
-         }
-         else {
-            //User tidak ada di database
-            echo "<div class='alert alert-danger'> User doesn't exist, please sign up! </div>";
-             header("refresh:2;url=/user/loginpage");
-            //  $this->security->hash(rand());
-         }
+                if (true == $check) {  
+                    //Password benar
+                    $this->session->set('id', $user->id);
+                    $this->session->set('name', $user->name);
+                    $this->session->set('email', $user->email);
+                    $this->session->set('phone', $user->phone);
+                    $this->session->set('address', $user->address);
+                    $this->session->set('is_admin', $user->is_admin);
+                    
+                    return $this->dispatcher->forward(array( 
+                        'controller' => 'index',
+                        'action' => 'index' 
+                    )); 
+                    $this->flashSession->success("Login Success");
+                    return $this->response->redirect('/');
+                }
+                else {
+                    //Password salah
+                    $this->flashSession->error("Wrong password!");
+                    return $this->response->redirect('/user/loginpage');
+                }
+            }
+            else {
+                //User tidak ada di database
+                $this->flashSession->error("User doesn't exist, please sign up!");
+                return $this->response->redirect('user/loginpage');
+                //  $this->security->hash(rand());
+            }
         }
      }
 
@@ -128,13 +126,17 @@ class UserController extends ControllerBase
         }
         if($success)
         {
-            echo "<div class='alert alert-success'> Profile Saved! </div>";
-            header("refresh:2;url=/user/profile");
+            $this->flashSession->success("Profil tersimpan!");
+            return $this->response->redirect('user/profile');
         } else 
         {
-            echo "<div class='alert alert-danger'> Profile not saved! </div>";
-            header("refresh:2;url=/user/editProfile");
+            $this->flashSession->error("Profil tidak diperbarui!");
+            return $this->response->redirect('user/editProfile');
         }
+    }
+    public function signuppageAction()
+    {
+       
     }
 
     public function signupAction()
@@ -157,8 +159,8 @@ class UserController extends ControllerBase
             {
                 // $this->view->message = "<div class='alert alert-danger'> Email already used, please use a new one! </div>";
                 $success = false;
-                header("refresh:2;url=/user/signuppage");
-                echo "<div class='alert alert-danger'> Email already used, please use a new one! </div>";
+                $this->flashSession->error("Email telah digunakan, gunakan email baru!");
+                return $this->response->redirect('user/signuppage');
                 
             } else
             {
@@ -178,14 +180,16 @@ class UserController extends ControllerBase
         }
         if (!$success) {
             $messages = $user->getMessages();
-
+            
+            $msg = "";
             foreach ($messages as $message) {
-                echo "<div class='alert alert-danger'>", $message->getMessage(), "</div>";
+                $msg = $msg." ".$message.".";
             }
-            header("refresh:2;url=/user/signuppage");
+            $this->flashSession->error($msg);
+            return $this->response->redirect('user/signuppage');
         } else {
-            echo "<div class='alert alert-success'> Sign up successful! </div>";
-            header("refresh:2;url=/user/loginpage");
+            $this->flashSession->success("Sign up berhasil!");
+            return $this->response->redirect('user/loginpage');
         }
     }
 
@@ -222,16 +226,18 @@ class UserController extends ControllerBase
         }
         if($success)
         {
-            echo "<div class='alert alert-success'> Data user berhasil diubah! </div>";
-            header("refresh:2;url=/user/aturuser");
+            $this->flashSession->success("Data user berhasil diedit!");
+            return $this->response->redirect('user/aturuser');
         } else 
         {
-            $messages = $user->getMessages();
+            // $messages = $user->getMessages();
 
-                foreach ($messages as $message) {
-                    echo "<div class='alert alert-danger'>", $message,  "</div><br>";
-                }
-            header("refresh:2;url=/user/aturuser");
+            // $msg = "";
+            // foreach ($messages as $message) {
+            //     $msg = $msg." ".$message.".";
+            // }
+            $this->flashSession->error("Data user gagal diedit!");
+                return $this->response->redirect('user/aturuser');
         }
     }
 
@@ -251,13 +257,15 @@ class UserController extends ControllerBase
             if ($exist->delete() === false) {
                 $messages = $exist->getMessages();
 
+                $msg = "";
                 foreach ($messages as $message) {
-                    echo "<div class='alert alert-danger'>", $message,  "</div><br>";
+                    $msg = $msg." ".$message.".";
                 }
-                header("refresh:2;url=/user/aturuser/".$id);
+                $this->flashSession->error($msg);
+                return $this->response->redirect('user/aturuser');
             } else {
-                echo "<div class='alert alert-success'> Data user berhasil dihapus!</div>";
-                header("refresh:2;url=/user/aturuser/".$id);
+                $this->flashSession->success("Data user berhasil dihapus!");
+                return $this->response->redirect('user/aturuser');
             }
         } 
         if (!$exist)
@@ -265,17 +273,17 @@ class UserController extends ControllerBase
             if ($user !== false) {
                 if ($user->delete() === false) {
                     $messages = $user->getMessages();
-    
+                    $msg = "";
                     foreach ($messages as $message) {
-                        echo "<div class='alert alert-danger'>", $message,  "</div><br>";
+                        $msg = $msg." ".$message.".";
                     }
-                    header("refresh:2;url=/user/aturuser");
+                    $this->flashSession->error($msg);
+                    return $this->response->redirect('user/aturuser');
                 } else {
-                    echo "<div class='alert alert-success'> Data user berhasil dihapus!</div>";
-                    header("refresh:2;url=/user/aturuser");
+                    $this->flashSession->success("Data user berhasil dihapus!");
+                    return $this->response->redirect('user/aturuser');
                 }
             }
         }
     }
-
 }

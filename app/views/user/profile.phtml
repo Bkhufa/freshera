@@ -1,10 +1,12 @@
 
 <?php
     echo "<div class='card text-center frame fsmall'><div class='card-body row'>";
-    echo "<h2 class='card-title col-12'>Profile</h2><hr class='col-10'>";
+    echo "<h2 class='card-title col-12'>Profile</h2>";
+    echo "<hr class='col-10'>";
 ?>
     <!-- <div class="card"> -->
         <!-- <div class="card-body"> -->
+            <h5 class="col-12 card-title" style="color:var(--color-1);"><?= $this->flashSession->output() ?></h5>
             <h5 class="col-12 card-title" style="color:var(--color-1);"><?= $this->session->get('name') ?></h5>
             <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('email') ?></p>
             <hr class='col-3'><p class="col-12 card-text"><?= $this->session->get('phone') ?></p>
