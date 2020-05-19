@@ -198,7 +198,7 @@ class UserController extends ControllerBase
     {
         $this->authorized();
         $this->view->users = User::find([
-            'conditions' => 'is_admin is null',
+            'conditions' => 'is_admin is null OR is_admin = 0',
         ]);
     }
 
@@ -291,7 +291,7 @@ class UserController extends ControllerBase
     {
         $this->authorized();
         $this->view->users = User::find([
-            'conditions' => 'is_admin is not null',
+            'conditions' => 'is_admin is not null AND is_admin <> 0',
         ]);
         // $users = array();
         // foreach ()

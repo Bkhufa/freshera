@@ -17,7 +17,7 @@ class OrderController extends ControllerBase
             $order->productid = $product_id;
             $order->userid = $user_id;
             $order->order_quantity = $dataSent["modal-jumlah"];
-            $order->order_subtotal = $dataSent["modal-harga"];
+            $order->order_subtotal = $dataSent["modal-harga"] / 1000;
             $order->order_status = 0;
             $success = $order->save();
         }
