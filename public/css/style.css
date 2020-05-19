@@ -12,6 +12,8 @@
     padding: 7px;
     height: 55px;
     width: 45px;
+    left: 50%;
+    position: absolute;
 }
 
 body {
