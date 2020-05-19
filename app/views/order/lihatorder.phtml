@@ -15,7 +15,6 @@ if ($orders->count() >= 0) {
                 <th class="align-middle">Nama Item</th>
                 <th class="align-middle">Jumlah</th>
                 <th class="align-middle">Harga Subtotal</th>
-                <th class="align-middle">Pembayaran</th>
                 <th class="align-middle">Status Pemesanan</th>
                 <th class="align-middle">Action</th>
             </tr>
@@ -41,23 +40,33 @@ if ($orders->count() >= 0) {
                         <td class="align-middle"><?php echo $order->order_quantity; ?></td>
                         <td class="align-middle"><?php echo $order->order_subtotal; ?></td>
                         <?php 
-                        if (!$order->getItemFoto())
-                        { ?>
-                            <td class="align-middle">Belum Bayar</td> <?php
-                        }
-                        else
-                        { ?>
-                            <td class="align-middle">Sudah Bayar</td> <?php
-                        }
+                            if ($order->order_status == 0)
+                            { ?>
+                                <td class="align-middle">Belum Bayar</td> <?php
+                            }
+                            else if($order->order_status == 1)
+                            { ?>
+                                <td class="align-middle">Sudah Bayar</td> <?php
+                            }
+                            else if($order->order_status == 2)
+                            { ?>
+                                <td class="align-middle">Pesanan dalam Proses</td> <?php
+                            }
+                            else if($order->order_status == 3)
+                            { ?>
+                                <td class="align-middle">Pesanan telah Sampai</td> <?php
+                            }
                         ?>
-                        <td class="align-middle">Status Pemesanan</td>
                         <td class="align-middle" >
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-bayar">
                                 Pembayaran
                             </button> </br> </br>
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-batal">
                                 Batalkan Pesanan
-                            </button>                            
+                            </button>
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-datang">
+                                Pesanan Datang
+                            </button> </br> </br>                        
                         </td>
                     </tr>
                     <?php
@@ -139,4 +148,33 @@ if ($orders->count() >= 0) {
             </div>
         </div>
     </div>
-</div>        
+</div>    
+
+<div class="modal fade" id="modal-datang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Pesanan Tiba</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <?php echo "Apakah pesanan Anda telah tiba di tempat Anda?"; ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <?php
+                echo $this->tag->linkTo([
+                    "/order/tibaorder/".$order->order_id,
+                    'Ya ',
+                    "class" => "btn btn-success",
+                    "data-toggle" =>"tooltip",
+                    "data-placement" => "top",
+                    'title' => "Pesanan Tiba"
+                ]);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>

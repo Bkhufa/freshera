@@ -36,6 +36,12 @@ class Order extends Model
 
     /**
      *
+     * @var integer
+     */
+    public $order_status;
+    
+    /**
+     *
      * @var string
      */
     public $order_subtotal;

@@ -1,0 +1,106 @@
+<?php
+echo "<div class='card'><div class='card-body'>";
+echo "<h2 class='text-center'>Manage Order</h2>";
+echo "</div></div><hr>";
+echo $this->flashSession->output();
+$i = 0;
+
+if ($items->count() >= 0) {
+    ?>
+    <table class="table table-bordered table-hover text-center align-bottom">
+        <thead class="thead bg-secondary text-white ">
+        <tr>
+            <th class="align-middle">#</th>
+            <th class="align-middle">Nama</th>
+            <th class="align-middle">Item</th>
+            <th class="align-middle">Jumlah Item</th>
+            <th class="align-middle">Harga Subtotal</th>
+            <th class="align-middle">Alamat Pemesanan</th>
+            <th class="align-middle">Status Pembayaran</th>
+            <th class="align-middle">Bukti Pembayaran</th>
+            <th class="align-middle">Kirim Pesanan</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white">
+            <?php foreach ($orders as $order) 
+            { 
+                $i++;
+                ?>
+                <tr>
+                    <td class="align-middle"><?php echo $i ?></td>
+                    <?php foreach ($users as $user) {
+                        if($user->id == $order->userid) { ?>
+                            <td class="align-middle"><?php echo $user->name; ?></td>
+                            <?php break;
+                        }
+                    } ?>
+                    <?php foreach ($items as $item) {
+                        if($item->item_id == $order->productid) { ?>
+                            <td class="align-middle"><?php echo $item->item_nama; ?></td>
+                            <?php break;
+                        }
+                    } ?>
+                    <td class="align-middle"><?php echo $order->order_quantity; ?></td>
+                    <td class="align-middle"><?php echo $order->order_subtotal; ?></td>
+                    <td class="align-middle"><?php echo $order->order_address; ?></td>
+                    <?php 
+                        if ($order->order_status == 0)
+                        { ?>
+                            <td class="align-middle">Belum Bayar</td> <?php
+                        }
+                        else if($order->order_status == 1)
+                        { ?>
+                            <td class="align-middle">Sudah Bayar</td> <?php
+                        }
+                        else if($order->order_status == 2)
+                        { ?>
+                            <td class="align-middle">Pesanan dalam Proses</td> <?php
+                        }
+                        else if($order->order_status == 3)
+                        { ?>
+                            <td class="align-middle">Pesanan telah Sampai</td> <?php
+                        }
+                    ?>
+                    <td class="align-middle"><img class="img-responsive center-block" 
+                        height="150" width="100" 
+                        src="data:image/jpeg;base64,<?php echo $order->getItemFoto() ?>">
+                    </td>
+                    <td class="align-middle" >
+                        <a style="width:45px; margin: 5px auto" href="#modal-kirim" class="btn btn-success" data-toggle="modal" data-placement="top" title="Hapus Item"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    <?php
+}
+?>
+<!-- Modal -->
+<div class="modal fade" id="modal-kirim" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Konfirmasi Pembayaran Pemesanan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?php echo "Apakah Anda ingin mengkonfirmasi pembayaran pemesanan ini?"; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <?php
+            echo $this->tag->linkTo([
+                "/order/kirimorder/".$order->order_id,
+                'Ya ',
+                "class" => "btn btn-success",
+                "data-toggle" =>"tooltip",
+                "data-placement" => "top",
+                'title' => "Hapus Item"
+            ]);
+        ?>
+      </div>
+    </div>
+  </div>
+</div>        
