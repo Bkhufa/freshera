@@ -84,6 +84,89 @@ class OrderController extends ControllerBase
         $this->view->orders = Order::find();
     }
 
+    public function bayarOrderAction($order_id)
+    {
+        $this->authorized();
+        $success = false;
+        $dataSent = $this->request->getPost();
+
+        $exist = Order::findFirst([
+            'conditions' => 'order_id = :order_id:',
+            'bind'       => [
+                'order_id' => $order_id,
+            ],
+        ]);
+ 
+        if($exist)
+        {
+            $exist->order_address = $dataSent["order_address"];
+            $exist->setItemFoto(base64_encode(file_get_contents($this->request->getUploadedFiles()[0]->getTempName())));
+            
+            $success = $exist->update();
+        }
+        if($success)
+        {
+            $this->flashSession->success("Konfirmasi Pembayaran Berhasil!");
+            return $this->response->redirect('order/lihatorder');
+        } else 
+        {
+            $messages = $order->getMessages();
+
+            $msg = "";
+            foreach ($messages as $message) {
+                $msg = $msg." ".$message.".";
+            }
+            $this->flashSession->error($msg);
+
+            return $this->response->redirect('order/lihatorder');
+        }
+    }
+
+    public function hapusOrderAction($order_id)
+    {
+        $this->authorized();
+        $exist = Order::findFirst([
+            'conditions' => 'order_id = :order_id:',
+            'bind'       => [
+                'order_id' => $order_id,
+            ],
+        ]);
+        if ($exist !== false) 
+        {
+            if ($exist->delete() === false) {
+                $messages = $exist->getMessages();
+
+            $msg = "";
+            foreach ($messages as $message) {
+                $msg = $msg." ".$message.".";
+            }
+            $this->flashSession->error($msg);
+            return $this->response->redirect('order/lihatorder');
+            } else {
+                $this->flashSession->success("Pesanan telah dibatalkan!");
+                return $this->response->redirect('order/lihatorder');
+            }
+        } 
+        if (!$exist)
+        {
+            if ($order !== false) {
+                if ($order->delete() === false) {
+                    $messages = $order->getMessages();
+    
+                    $msg = "";
+                    foreach ($messages as $message) {
+                        $msg = $msg." ".$message.".";
+                    }
+                    $this->flashSession->error($msg);
+                    return $this->response->redirect('order/lihatorder');
+                } else {
+                    $this->flashSession->success("Pesanan telah dibatalkan!");
+                    return $this->response->redirect('order/lihatorder');
+                }
+            }
+        }
+    }
+
     public function aturOrderAction()
     {
 

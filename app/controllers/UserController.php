@@ -174,6 +174,7 @@ class UserController extends ControllerBase
                 $user->password = $hashed;
                 $user->phone = $dataSent["phone"];
                 $user->address = $dataSent["address"];
+                $user->is_admin = 0;
     
                 $success = $user->save();
             }

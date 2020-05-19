@@ -32,6 +32,12 @@ class Order extends Model
      *
      * @var string
      */
+    public $order_address;
+
+    /**
+     *
+     * @var string
+     */
     public $order_subtotal;
 
     public function initialize()
