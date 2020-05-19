@@ -130,3 +130,9 @@ hr {
   -webkit-appearance: none; 
   margin: 0; 
 }
+
+.diskonan{
+    right: 10px;
+    bottom: 47px;
+    position: absolute;
+}
