@@ -20,5 +20,8 @@ function kurangJumlah() {
 
 function updateJumlah() {
     document.getElementById('modal-jumlah').value = jumlah.value;
-    document.getElementById('modal-harga').value = parseFloat(jumlah.value, 10) * parseFloat(harga.innerHTML, 10) * 1000;
+    var modalharga = document.getElementById('modal-harga').value = parseFloat(jumlah.value, 10) * parseFloat(harga.innerHTML, 10) * 1000;
+    var diskon = parseInt (document.getElementById('diskonan').innerHTML);
+    modalharga = modalharga * diskon / 100;
+    document.getElementById('modal-harga').value = modalharga;
 }
