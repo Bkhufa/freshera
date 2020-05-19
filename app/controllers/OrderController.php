@@ -18,7 +18,7 @@ class OrderController extends ControllerBase
             $order->userid = $user_id;
             $order->order_quantity = $dataSent["modal-jumlah"];
             $order->order_subtotal = $dataSent["modal-harga"];
-
+            $order->order_status = 0;
             $success = $order->save();
         }
         if($success)
@@ -82,6 +82,7 @@ class OrderController extends ControllerBase
         $this->authorized();
         $this->view->items = Item::find();
         $this->view->orders = Order::find();
+        $this->view->users = User::find();
     }
 
     public function bayarOrderAction($order_id)
@@ -101,7 +102,7 @@ class OrderController extends ControllerBase
         {
             $exist->order_address = $dataSent["order_address"];
             $exist->setItemFoto(base64_encode(file_get_contents($this->request->getUploadedFiles()[0]->getTempName())));
-            
+            $exist->order_status = 1;
             $success = $exist->update();
         }
         if($success)
@@ -169,6 +170,77 @@ class OrderController extends ControllerBase
 
     public function aturOrderAction()
     {
+        $this->authorized();
+        $this->view->items = Item::find();
+        $this->view->orders = Order::find();
+        $this->view->users = User::find();
+    }
 
+    public function kirimOrderAction($order_id)
+    {
+        $this->authorized();
+        $success = false;
+
+        $exist = Order::findFirst([
+            'conditions' => 'order_id = :order_id:',
+            'bind'       => [
+                'order_id' => $order_id,
+            ],
+        ]);
+        if($exist)
+        {
+            $exist->order_status = 2;
+            $success = $exist->update();
+        }
+        if($success)
+        {
+            $this->flashSession->success("Konfirmasi Pembayaran Disetujui dan Pesanan Dikirim!");
+            return $this->response->redirect('order/aturorder');
+        } else 
+        {
+            $messages = $order->getMessages();
+
+            $msg = "";
+            foreach ($messages as $message) {
+                $msg = $msg." ".$message.".";
+            }
+            $this->flashSession->error($msg);
+
+            return $this->response->redirect('order/aturorder');
+        }
+    }
+
+    public function tibaOrderAction($order_id)
+    {
+        $this->authorized();
+        $success = false;
+
+        $exist = Order::findFirst([
+            'conditions' => 'order_id = :order_id:',
+            'bind'       => [
+                'order_id' => $order_id,
+            ],
+        ]);
+        if($exist)
+        {
+            $exist->order_status = 3;
+            $success = $exist->update();
+        }
+        if($success)
+        {
+            $this->flashSession->success("Pesanan telah Tiba di Tempat Anda!");
+            return $this->response->redirect('order/lihatorder');
+        } else 
+        {
+            $messages = $order->getMessages();
+
+            $msg = "";
+            foreach ($messages as $message) {
+                $msg = $msg." ".$message.".";
+            }
+            $this->flashSession->error($msg);
+
+            return $this->response->redirect('order/lihatorder');
+        }
     }
 }
