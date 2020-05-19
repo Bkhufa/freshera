@@ -5,6 +5,8 @@ $( document ).ready(function() {
 
 var jumlah = document.getElementById('jumlah');
 var harga = document.getElementById('harga');
+var btnedit = document.getElementById('btn-edit');
+var btndelete = document.getElementById('btn-delete');
 
 
 function tambahJumlah() {

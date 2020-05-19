@@ -39,8 +39,8 @@ if ($items->count() >= 0) {
                 <td class="align-middle"><?php echo $item->status_diskon; ?>%</td>
                 <td class="align-middle" >
                 <a style="width:45px;" href="#modal-diskon" class="btn btn-success" data-toggle="modal" data-placement="top" title="Atur Diskon Item"><i class="fas fa-percent" aria-hidden="true"></i></a>
-                    <a style="width:45px;" href="#modal-edit" class="btn btn-info" data-toggle="modal" data-placement="top" title="Edit Item"><i class="fas fa-edit" aria-hidden="true"></i></a>
-                    <a style="width:45px; margin: 5px auto" href="#modal-delete" class="btn btn-danger" data-toggle="modal" data-placement="top" title="Hapus Item"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                    <a id="btn-edit" style="width:45px;" href="#modal-edit" class="btn btn-info" data-toggle="modal" data-placement="top" title="Edit Item"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                    <a id="btn-delete" style="width:45px; margin: 5px auto" href="#modal-delete" class="btn btn-danger" data-toggle="modal" data-placement="top" title="Hapus Item"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                 </td>
             </tr>
         <?php } ?>
@@ -176,7 +176,7 @@ if ($items->count() >= 0) {
             <div class="row">
               <div class="col-6 form-group">
                   <label for="item_nama">Nama Item</label>
-                  <?php echo $this->tag->textField(["item_nama", "class" => "form-control", "required" => "1", "value" => $item->item_nama[$i]]); ?>
+                  <?php echo $this->tag->textField(["item_nama", "class" => "form-control", "required" => "1", "value" => $item->item_nama]); ?>
               </div>
 
               <div class="col-6 form-group">

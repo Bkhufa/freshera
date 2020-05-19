@@ -293,6 +293,8 @@ class UserController extends ControllerBase
         $this->view->users = User::find([
             'conditions' => 'is_admin is not null',
         ]);
+        // $users = array();
+        // foreach ()
     }
 
     public function tambahPegawaiAction()
