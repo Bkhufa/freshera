@@ -6,6 +6,14 @@
     --color-white: #fcfcfc;
 }
 
+.logo {
+    background-color: white;
+    border-radius: 50%;
+    padding: 7px;
+    height: 55px;
+    width: 45px;
+}
+
 body {
     /* background-color: #333333; */
     background-image: url(/img/leaves.png);
