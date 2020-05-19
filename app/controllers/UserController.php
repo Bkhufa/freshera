@@ -228,7 +228,7 @@ class UserController extends ControllerBase
         if($success)
         {
             $this->flashSession->success("Data user berhasil diedit!");
-            return $this->response->redirect('user/aturuser');
+            return $this->response->redirect('user/aturpegawai');
         } else 
         {
             // $messages = $user->getMessages();
@@ -238,7 +238,7 @@ class UserController extends ControllerBase
             //     $msg = $msg." ".$message.".";
             // }
             $this->flashSession->error("Data user gagal diedit!");
-                return $this->response->redirect('user/aturuser');
+                return $this->response->redirect('user/aturpegawai');
         }
     }
 
@@ -317,7 +317,7 @@ class UserController extends ControllerBase
             {
                 // $this->view->message = "<div class='alert alert-danger'> Email already used, please use a new one! </div>";
                 $success = false;
-                return $this->response->redirect('user/aturuser');
+                return $this->response->redirect('user/aturpegawai');
                 $this->flashSession->error("Email telah digunakan, gunakan email baru!");
                 
             } else

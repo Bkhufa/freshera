@@ -15,7 +15,7 @@ if ($buah->count() > 0) {
                     <h5 class="col-12"><?php echo $buahs->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($buahs->item_harga), 0, ".", ".") ?></p>
                     <?php if ($buahs->status_diskon !=0) { ?>
-                        <p class="btn btn-danger">Diskon <?php echo $buahs->status_diskon ?>%</p>
+                        <p class="btn btn-danger diskonan">Diskon <?php echo $buahs->status_diskon ?>%</p>
                         <?php
                     } ?>
                 </div>
@@ -46,7 +46,7 @@ if ($sayur->count() > 0) {
                     <h5 class="col-12"><?php echo $sayurs->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($sayurs->item_harga), 0, ".", ".") ?></p>
                     <?php if ($sayurs->status_diskon !=0) { ?>
-                        <p class="btn btn-danger">Diskon <?php echo $sayurs->status_diskon ?>%</p>
+                        <p class="btn btn-danger diskonan">Diskon <?php echo $sayurs->status_diskon ?>%</p>
                         <?php
                     } ?>
                 </div>
@@ -76,7 +76,7 @@ if ($rempah->count() > 0) {
                     <h5 class="col-12"><?php echo $rempahs->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($rempahs->item_harga), 0, ".", ".") ?></p>
                     <?php if ($rempahs->status_diskon !=0) { ?>
-                        <p class="btn btn-danger">Diskon <?php echo $rempahs->status_diskon ?>%</p>
+                        <p class="btn btn-danger diskonan">Diskon <?php echo $rempahs->status_diskon ?>%</p>
                         <?php
                     } ?>
                 </div>
@@ -106,7 +106,7 @@ if ($lain->count() > 0) {
                     <h5 class="col-12"><?php echo $lains->item_nama; ?></h5>
                     <p class="col-4">Rp<?php echo number_format(abs($lains->item_harga), 0, ".", ".") ?></p>
                     <?php if ($lains->status_diskon !=0) { ?>
-                        <p class="btn btn-danger">Diskon <?php echo $lains->status_diskon ?></p>
+                        <p class="btn btn-danger diskonan">Diskon <?php echo $lains->status_diskon ?></p>
                         <?php
                     } ?>
                 </div>

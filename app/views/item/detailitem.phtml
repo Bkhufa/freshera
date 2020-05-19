@@ -3,7 +3,7 @@
         <h3 class="col-12 card-title"><?php echo $item->item_nama; ?></h3><hr>
         <div class="card-body row align-middle">
             <img class="col-4 img-responsive center-block" 
-                            height="360" width="260" 
+                            height="330" width="330" 
                             src="data:image/jpeg;base64,<?php echo $item->getItemFoto() ?>">
             <div class="col-8 row">
                 <p class="col-12 item-data"><i class="fas fa-tag">&nbsp;</i>&nbsp;<b>Harga:</b> Rp&nbsp;<span id="harga"><?php echo number_format(abs($item->item_harga), 0, ".", ".") ?></span></p><hr class="col-11">
