@@ -162,7 +162,6 @@ if ($items->count() >= 0) {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <!-- <?php echo $this->tag->form("item/edititem/".$item->item_id); ?> -->
       <?php
         echo $this->tag->form(
           [
@@ -177,7 +176,7 @@ if ($items->count() >= 0) {
             <div class="row">
               <div class="col-6 form-group">
                   <label for="item_nama">Nama Item</label>
-                  <?php echo $this->tag->textField(["item_nama", "class" => "form-control", "required" => "1", "value" => $item->item_nama]); ?>
+                  <?php echo $this->tag->textField(["item_nama", "class" => "form-control", "required" => "1", "value" => $item->item_nama[$i]]); ?>
               </div>
 
               <div class="col-6 form-group">
