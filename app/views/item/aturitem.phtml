@@ -39,8 +39,8 @@ if ($items->count() >= 0) {
                 <td class="align-middle"><?php echo $item->status_diskon; ?>%</td>
                 <td class="align-middle" >
                 <a style="width:45px;" href="#modal-diskon" class="btn btn-success" data-toggle="modal" data-placement="top" title="Atur Diskon Item"><i class="fas fa-percent" aria-hidden="true"></i></a>
-                    <a style="width:45px;" href="#modal-edit" class="btn btn-info" data-toggle="modal" data-placement="top" title="Edit Item"><i class="fas fa-edit" aria-hidden="true"></i></a>
-                    <a style="width:45px; margin: 5px auto" href="#modal-delete" class="btn btn-danger" data-toggle="modal" data-placement="top" title="Hapus Item"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+                    <a id="btn-edit" style="width:45px;" href="#modal-edit" class="btn btn-info" data-toggle="modal" data-placement="top" title="Edit Item"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                    <a id="btn-delete" style="width:45px; margin: 5px auto" href="#modal-delete" class="btn btn-danger" data-toggle="modal" data-placement="top" title="Hapus Item"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
                 </td>
             </tr>
         <?php } ?>
@@ -162,7 +162,6 @@ if ($items->count() >= 0) {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <!-- <?php echo $this->tag->form("item/edititem/".$item->item_id); ?> -->
       <?php
         echo $this->tag->form(
           [
