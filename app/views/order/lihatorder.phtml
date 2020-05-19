@@ -1,0 +1,142 @@
+<?php
+echo "<div class='card'><div class='card-body'>";
+echo "<h2 class='text-center'>Lihat Pesanan</h2>";
+echo "</div></div><hr>";
+echo $this->flashSession->output();
+$i = 0;
+
+if ($orders->count() >= 0) {
+    ?>
+    <table class="table table-bordered table-hover text-center align-bottom">
+        <thead class="thead bg-secondary text-white ">
+            <tr>
+                <th class="align-middle">#</th>
+                <th class="align-middle">Foto</th>
+                <th class="align-middle">Nama Item</th>
+                <th class="align-middle">Jumlah</th>
+                <th class="align-middle">Harga Subtotal</th>
+                <th class="align-middle">Pembayaran</th>
+                <th class="align-middle">Status Pemesanan</th>
+                <th class="align-middle">Action</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <?php foreach ($orders as $order) { 
+                if ($order->userid == $this->session->get('id')) {
+                    $i++; 
+                    ?>
+                    <tr>
+                        <td class="align-middle"><?php echo $i ?></td>
+                        <?php foreach ($items as $item) {
+                            if ($item->item_id == $order->productid) { ?>
+                                <td class="align-middle"><img class="img-responsive center-block" 
+                                    height="150" width="100" 
+                                    src="data:image/jpeg;base64,<?php echo $item->getItemFoto() ?>">
+                                </td>
+                                <td class="align-middle"><?php echo $item->item_nama; ?></td> <?php
+                                break;
+                            }
+                        } ?>
+                        
+                        <td class="align-middle"><?php echo $order->order_quantity; ?></td>
+                        <td class="align-middle"><?php echo $order->order_subtotal; ?></td>
+                        <?php 
+                        if (!$order->getItemFoto())
+                        { ?>
+                            <td class="align-middle">Belum Bayar</td> <?php
+                        }
+                        else
+                        { ?>
+                            <td class="align-middle">Sudah Bayar</td> <?php
+                        }
+                        ?>
+                        <td class="align-middle">Status Pemesanan</td>
+                        <td class="align-middle" >
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-bayar">
+                                Pembayaran
+                            </button> </br> </br>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-batal">
+                                Batalkan Pesanan
+                            </button>                            
+                        </td>
+                    </tr>
+                    <?php
+                }    
+            } ?>
+        </tbody>
+    </table>
+    <?php
+}
+?>
+<!-- Modal -->
+<div class="modal fade" id="modal-bayar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Pembayaran Pemesanan</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- <?php echo $this->tag->form("item/bayarorder/".$order->order_id); ?> -->
+      <?php
+        echo $this->tag->form(
+            [
+            "order/bayarorder/".$order->order_id,
+            "autocomplete" => "off",
+            "class" => "form-horizontal",
+            "enctype" => "multipart/form-data"
+            ]
+        );
+       ?> 
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-12 form-group">
+                  <label for="order_address">Alamat Tempat Pengiriman</label>
+                  <?php echo $this->tag->textArea(["order_address", "class" => "form-control", "required" => "1"]); ?>
+              </div>
+
+              <div class="col-12 form-group">
+                  <label for="item_foto">Bukti Pembayaran</label>
+                  <?php echo $this->tag->fileField(["imageFile", "size" => 30, "class" => "form-control", "id" => "item_foto"]) ?>
+              </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <?php echo $this->tag->submitButton(["Submit", "class" => "btn btn-primary"]), PHP_EOL; ?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-batal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Batal Pemesanan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <?php echo "Apakah anda yakin ingin membatalkan pemesanan?"; ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <?php
+                echo $this->tag->linkTo([
+                    "/order/hapusorder/".$order->order_id,
+                    'Ya ',
+                    "class" => "btn btn-danger",
+                    "data-toggle" =>"tooltip",
+                    "data-placement" => "top",
+                    'title' => "Hapus Item"
+                ]);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>        

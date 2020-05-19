@@ -77,4 +77,15 @@ class OrderController extends ControllerBase
         }
     }
 
+    public function lihatOrderAction() 
+    {
+        $this->authorized();
+        $this->view->items = Item::find();
+        $this->view->orders = Order::find();
+    }
+
+    public function aturOrderAction()
+    {
+
+    }
 }

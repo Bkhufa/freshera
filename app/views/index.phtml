@@ -19,11 +19,20 @@
                         # Check User Login
                         if ($this->session->has('name'))
                         {
-                            echo $this->tag->linkTo([
-                                "/",
-                                'Admin &nbsp;<i class="fa fa-user-cog"></i> ',
-                                "class" => "navbar-brand text-white"
-                            ]);
+                            if ($this->session->get('is_admin') == 1) {
+                                echo $this->tag->linkTo([
+                                    "/",
+                                    'Admin &nbsp;<i class="fa fa-user-cog"></i> ',
+                                    "class" => "navbar-brand text-white"
+                                ]);
+                            }
+                            else {
+                                echo $this->tag->linkTo([
+                                    "/",
+                                    'Customer &nbsp;<i class="fa fa-user-cog"></i> ',
+                                    "class" => "navbar-brand text-white"
+                                ]);
+                            }
                         } else 
                         {
                             echo $this->tag->linkTo([
@@ -41,32 +50,43 @@
                     <ul class="navbar-nav">
                         <?php
                             # Check User Login
-                            if ($this->session->get('is_admin') != null)
-                            {
-                                echo "<li class='nav-item'>", $this->tag->linkTo([
-                                    "/user/aturuser",
-                                    'Kelola User',
-                                    "class" => "nav-link"
-                                ]), "</li>";
-
-                                echo "&nbsp;";
-                                
-                                echo "<li class='nav-item'>", $this->tag->linkTo([
-                                    "/user/aturpegawai",
-                                    'Kelola Pegawai',
-                                    "class" => "nav-link"
-                                ]), "</li>";
-
-                                echo "&nbsp;";
-
-                                echo "<li class='nav-item'>", $this->tag->linkTo([
-                                    "/item/aturitem",
-                                    'Kelola Item',
-                                    "class" => "nav-link"
-                                ]), "</li>";
-
-                                echo "&nbsp;";
+                            if ($this->session->has('name')) {
+                                if ($this->session->get('is_admin') == 1)
+                                {
+                                    echo "<li class='nav-item'>", $this->tag->linkTo([
+                                        "/user/aturuser",
+                                        'Kelola User',
+                                        "class" => "nav-link"
+                                    ]), "</li>";
+    
+                                    echo "&nbsp;";
+                                    
+                                    echo "<li class='nav-item'>", $this->tag->linkTo([
+                                        "/user/aturpegawai",
+                                        'Kelola Pegawai',
+                                        "class" => "nav-link"
+                                    ]), "</li>";
+    
+                                    echo "&nbsp;";
+    
+                                    echo "<li class='nav-item'>", $this->tag->linkTo([
+                                        "/item/aturitem",
+                                        'Kelola Item',
+                                        "class" => "nav-link"
+                                    ]), "</li>";
+    
+                                    echo "&nbsp;";
+                                }
+                                else {
+                                    echo "<li class='nav-item'>", $this->tag->linkTo([
+                                        "/order/lihatorder",
+                                        'Pesanan',
+                                        "class" => "nav-link"
+                                    ]), "</li>";
+    
+                                }
                             }
+                            
                         ?>
 
                     </ul>
