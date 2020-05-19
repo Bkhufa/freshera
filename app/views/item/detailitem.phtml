@@ -6,7 +6,12 @@
                             height="330" width="330" 
                             src="data:image/jpeg;base64,<?php echo $item->getItemFoto() ?>">
             <div class="col-8 row">
-                <p class="col-12 item-data"><i class="fas fa-tag">&nbsp;</i>&nbsp;<b>Harga:</b> Rp&nbsp;<span id="harga"><?php echo number_format(abs($item->item_harga), 0, ".", ".") ?></span></p><hr class="col-11">
+                <?php if ($item->status_diskon !=0) { ?>
+                    <p class="col-10 item-data"><i class="fas fa-tag">&nbsp;</i>&nbsp;<b>Harga:</b> Rp&nbsp;<span id="harga"><?php echo number_format(abs($item->item_harga), 0, ".", ".") ?></span></p>
+                    <p class="btn btn-danger diskonan-detail col-2">Diskon <span id="diskonan"><?php echo $item->status_diskon ?></span>%</p>
+                    <?php
+                } else
+                    echo '<p class="col-6 item-data"><i class="fas fa-tag">&nbsp;</i>&nbsp;<b>Harga:</b> Rp&nbsp;<span id="harga">', number_format(abs($item->item_harga), 0, ".", "."), '</span></p><hr class="col-11">' ?>
                 <p class="col-12 item-data"><i class="fas fa-boxes">&nbsp;</i>&nbsp;<b>Stock:</b>&nbsp;<?php echo $item->item_stock; ?></p><hr class="col-11">
                 <p class="col-12 item-data"><i class="fas fa-map-marker-alt">&nbsp;</i>&nbsp;<b>Lokasi:</b>&nbsp;<?php echo $item->item_lokasi; ?></p><hr class="col-11">
                 <p class="col-12 item-data"><b>Deskripsi:</b><br><?php echo $item->item_deskripsi; ?></p>
